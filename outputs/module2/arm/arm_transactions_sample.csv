@@ -1,0 +1,31 @@
+transaction
+Adventure; Animation; Comedy; Family; HighBudget; HighRating; HighRevenue; Mystery; NonSummerRelease; PopularTop25; ShortRuntime
+Adventure; HighBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; Science Fiction; ShortRuntime; Thriller
+Adventure; HighBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; Science Fiction; ShortRuntime; Thriller
+Action; Crime; HighBudget; HighRating; LongRuntime; LowRevenue; NonSummerRelease; PopularTop25; Thriller
+Action; Fantasy; LowBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; ShortRuntime; Thriller
+Action; Comedy; Crime; LongRuntime; LowBudget; LowRating; LowRevenue; Mystery; NonSummerRelease; PopularTop25
+Action; Crime; Drama; HighRating; HighRevenue; LongRuntime; LowBudget; PopularTop25; SummerRelease; Thriller
+Action; Crime; LowBudget; LowRating; LowRevenue; PopularTop25; ShortRuntime; SummerRelease; Thriller
+Action; Adventure; HighBudget; HighRating; HighRevenue; NonSummerRelease; PopularTop25; Science Fiction; ShortRuntime
+Adventure; Fantasy; HighBudget; HighRating; HighRevenue; LongRuntime; NonSummerRelease; PopularTop25; Science Fiction
+Adventure; Comedy; HighBudget; HighRevenue; Horror; LowRating; NonSummerRelease; PopularTop25; ShortRuntime
+Adventure; Animation; Comedy; Family; Fantasy; HighBudget; HighRevenue; LowRating; NonSummerRelease; PopularTop25; ShortRuntime
+HighBudget; HighRating; HighRevenue; LongRuntime; Mystery; NonSummerRelease; PopularTop25; Thriller
+Action; Crime; LowBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; ShortRuntime; Thriller
+Action; Horror; LowBudget; LowRating; LowRevenue; Mystery; NonSummerRelease; PopularTop25; Science Fiction; ShortRuntime; Thriller
+LowBudget; LowRating; LowRevenue; PopularTop25; Science Fiction; ShortRuntime; SummerRelease; Thriller
+Action; Drama; LongRuntime; LowBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; War
+Action; Animation; Fantasy; HighBudget; HighRating; HighRevenue; LongRuntime; PopularTop25; SummerRelease
+Action; HighBudget; HighRating; HighRevenue; Horror; LongRuntime; NonSummerRelease; PopularTop25; Thriller
+Drama; LowBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; ShortRuntime; Thriller
+Animation; Drama; Family; HighBudget; HighRating; HighRevenue; LongRuntime; NonSummerRelease; PopularTop25
+Adventure; HighBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; Science Fiction; ShortRuntime; Thriller
+Adventure; HighBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; Science Fiction; ShortRuntime; Thriller
+Drama; HighBudget; HighRating; HighRevenue; LongRuntime; NonSummerRelease; PopularTop25
+Action; Adventure; Fantasy; LongRuntime; LowBudget; LowRating; LowRevenue; PopularTop25; SummerRelease
+Action; Drama; HighBudget; LongRuntime; LowRating; LowRevenue; NonSummerRelease; PopularTop25
+Crime; HighBudget; HighRevenue; LongRuntime; LowRating; Mystery; NonSummerRelease; PopularTop25; Thriller
+Action; Crime; LowBudget; LowRating; LowRevenue; NonSummerRelease; PopularTop25; ShortRuntime; Thriller
+Action; Crime; HighBudget; HighRating; HighRevenue; LongRuntime; NonSummerRelease; PopularTop25; Thriller
+Action; Adventure; Crime; Drama; HighBudget; HighRevenue; LongRuntime; LowRating; PopularTop25; SummerRelease; Thriller

@@ -1,0 +1,6 @@
+PCA 2D variance retained: 0.6740 (67.40%)
+PCA 3D variance retained: 0.8222 (82.22%)
+Components needed for >=95% variance: 5
+
+Top 3 eigenvalues (explained_variance_):
+2.994322, 1.068330, 0.893232

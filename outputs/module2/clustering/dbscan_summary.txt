@@ -1,0 +1,3 @@
+DBSCAN eps=1.2 min_samples=6
+Clusters found: 4
+Noise points: 48

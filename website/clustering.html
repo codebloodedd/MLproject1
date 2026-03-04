@@ -13,19 +13,145 @@
 
     <div class="container">
         <div class="hero">
-            <span class="badge">Module 2</span>
+            <span class="badge">KMeans</span>
+            <span class="badge">Hierarchical</span>
+            <span class="badge">DBSCAN</span>
             <h1>Clustering</h1>
-            <div class="small">Work in progress — this section will be completed in later modules.</div>
+            <div class="small">
+                This section compares partition-based clustering (KMeans), hierarchical clustering, and density-based
+                clustering (DBSCAN) to discover structure in the TMDB dataset. Clustering helps identify groups of
+                movies
+                with similar numeric profiles (budget/revenue/popularity/ratings, etc.) without using labels.
+            </div>
         </div>
 
         <div class="card" style="margin-top:16px;">
-            <h2>Status</h2>
+            <h2>(a) Compare & Contrast: KMeans vs Hierarchical vs DBSCAN</h2>
+
             <p>
-                Work in progress. This tab will include an overview of clustering, the prepared dataset used, a link to
-                the code,
-                visualized cluster results, and interpretation of what the clusters represent for movie success.
+                <b>KMeans (partition clustering)</b> assigns each point to one of <i>k</i> clusters by minimizing
+                within-cluster variance. It is fast and works well for roughly spherical clusters, but requires choosing
+                <i>k</i> in advance and is sensitive to scaling and outliers.
+            </p>
+
+            <p>
+                <b>Hierarchical clustering</b> builds a tree (dendrogram) that shows how points merge into clusters as
+                the
+                distance threshold increases. This provides insight into structure at multiple levels, but can be more
+                computationally expensive. The clustering result depends on the linkage method (e.g., Ward linkage).
+            </p>
+
+            <p>
+                <b>DBSCAN (density clustering)</b> identifies dense regions of points and labels sparse points as noise.
+                It can find non-spherical clusters and does not require choosing <i>k</i>, but performance depends on
+                selecting sensible <code>eps</code> and <code>min_samples</code>.
             </p>
         </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(b) Data Prep</h2>
+
+            <p>
+                A labeled dataset was prepared for clustering by removing the label column and keeping only quantitative
+                features. The resulting numeric-only dataset was standardized using <b>StandardScaler</b> so each column
+                has mean 0 and standard deviation 1. PCA was then used to reduce the standardized data to 2D for
+                visualization and to keep clustering plots interpretable.
+            </p>
+
+            <ul>
+                <li><b>Clustering input (numeric-only, unlabeled) (CSV):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/clustering/clustering_input_numeric_only_unlabeled.csv"
+                        target="_blank" rel="noreferrer">clustering_input_numeric_only_unlabeled.csv</a>
+                </li>
+                <li><b>Silhouette scores table (CSV):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/clustering/silhouette_scores.csv"
+                        target="_blank" rel="noreferrer">silhouette_scores.csv</a>
+                </li>
+                <li><b>Clustering code and outputs:</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/tree/main/code/module2" target="_blank"
+                        rel="noreferrer">code/module2</a>
+                    and
+                    <a href="https://github.com/codebloodedd/MLproject1/tree/main/outputs/module2/clustering"
+                        target="_blank" rel="noreferrer">outputs/module2/clustering</a>
+                </li>
+            </ul>
+
+            <p class="small">
+                PCA reduction is used only for plotting and interpretation. Clustering is still performed on normalized
+                numeric features, ensuring no single feature dominates due to scale differences.
+            </p>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(c) Code & Results</h2>
+
+            <h3>Silhouette Method (KMeans)</h3>
+            <figure class="figure" style="margin-top:12px;">
+                <img src="assets/images/silhouette_curve.png" alt="Silhouette score curve">
+                <figcaption class="figcap">
+                    <b>Figure 1 — Silhouette score by k.</b> The silhouette curve supports testing multiple values of
+                    <code>k</code>. The three selected values are <b>k = 4, 5, 6</b>.
+                </figcaption>
+            </figure>
+
+            <h3 style="margin-top:16px;">KMeans clustering (k = 4, 5, 6)</h3>
+
+            <figure class="figure" style="margin-top:12px;">
+                <img src="assets/images/kmeans_1_k4.png" alt="KMeans k=4">
+                <figcaption class="figcap">
+                    <b>Figure 2 — KMeans (k=4).</b> Cluster centroids are shown as X markers. Points are colored by the
+                    original label to compare label structure against cluster structure.
+                </figcaption>
+            </figure>
+
+            <figure class="figure" style="margin-top:12px;">
+                <img src="assets/images/kmeans_2_k5.png" alt="KMeans k=5">
+                <figcaption class="figcap">
+                    <b>Figure 3 — KMeans (k=5).</b> Increasing k can separate additional sub-groups, but may also split
+                    coherent groups if k is too large.
+                </figcaption>
+            </figure>
+
+            <figure class="figure" style="margin-top:12px;">
+                <img src="assets/images/kmeans_3_k6.png" alt="KMeans k=6">
+                <figcaption class="figcap">
+                    <b>Figure 4 — KMeans (k=6).</b> Higher k increases segmentation and may reduce interpretability if
+                    clusters become small or overlap heavily.
+                </figcaption>
+            </figure>
+
+            <h3 style="margin-top:16px;">Hierarchical Clustering (Ward)</h3>
+            <figure class="figure" style="margin-top:12px;">
+                <img src="assets/images/hierarchical_dendrogram.png" alt="Hierarchical dendrogram (Ward)">
+                <figcaption class="figcap">
+                    <b>Figure 5 — Hierarchical dendrogram (Ward linkage).</b> The dendrogram shows how clusters merge as
+                    distance increases. Compared to KMeans, it provides a multi-resolution view of structure.
+                </figcaption>
+            </figure>
+
+            <h3 style="margin-top:16px;">DBSCAN</h3>
+            <figure class="figure" style="margin-top:12px;">
+                <img src="assets/images/dbscan.png" alt="DBSCAN clusters in PCA space">
+                <figcaption class="figcap">
+                    <b>Figure 6 — DBSCAN in PCA(2D) space.</b> DBSCAN can identify dense regions and label sparse points
+                    as noise (<code>-1</code>). This approach is useful when clusters are not spherical.
+                </figcaption>
+            </figure>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(d) Conclusions (Topic Connection)</h2>
+            <p>
+                Clustering helps reveal whether the numeric success-related features naturally form groups of movies.
+                The
+                PCA-based plots suggest a large dense core with smaller separated groups and some outliers. KMeans
+                provides a clean partitioning view, hierarchical clustering provides a tree-based view of structure, and
+                DBSCAN highlights dense regions while isolating sparse points as noise. These groupings support the core
+                project goal by identifying profiles of movies that tend to cluster together based on budget, revenue,
+                popularity, and related attributes.
+            </p>
+        </div>
+
     </div>
 
     <div id="footer-slot"></div>

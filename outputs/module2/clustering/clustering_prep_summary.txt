@@ -1,0 +1,3 @@
+Used label for coloring (removed from clustering): label_popular_top25
+Features: ['popularity', 'vote_average', 'vote_count', 'runtime', 'budget', 'revenue']
+PCA 3D variance retained: 0.8222 (82.22%)

@@ -9,14 +9,17 @@
 </head>
 
 <body>
+
     <div id="nav-slot"></div>
 
     <div class="container">
+
         <div class="hero">
             <span class="badge">Module 1 — Part 1</span>
             <span class="badge">TMDB API</span>
             <span class="badge">PG-13 topic</span>
             <h1>What makes a movie “successful”?</h1>
+
             <div class="small">
                 This project explores how movie attributes (genre, runtime, budget, revenue, release timing, and
                 audience engagement)
@@ -25,77 +28,99 @@
         </div>
 
         <div class="grid" style="margin-top:16px;">
+
             <div class="card">
+
                 <h2>Topic Background</h2>
+
                 <p>
                     Movies are more than entertainment; they are cultural products influenced by creative decisions,
-                    marketing, distribution
-                    strategy, and audience preferences. A film’s “success” can be measured in multiple ways. Some films
-                    become widely known
-                    and discussed (high popularity), while others earn strong audience approval (high ratings), even if
-                    they are less visible
-                    in mainstream channels. Understanding how these outcomes relate to measurable attributes—such as
-                    genre, runtime, and
-                    release timing—can provide insight into how audiences respond to different types of films.
+                    marketing, distribution strategy, and audience preferences. A film’s “success” can be measured in
+                    multiple ways. Some films become widely known and discussed (high popularity), while others earn
+                    strong audience approval (high ratings).
                 </p>
+
                 <p>
-                    Modern media platforms generate large-scale public signals of audience engagement. The Movie
-                    Database (TMDB) provides
-                    metadata and engagement indicators such as popularity scores, vote counts, and average ratings.
-                    These indicators can be
-                    combined with other descriptive features (budgets, revenues, and categorical genre labels) to
-                    explore patterns across a
-                    wide set of movies. This project will use TMDB data to identify trends, compare groups of films, and
-                    later apply
-                    unsupervised and supervised learning methods to evaluate which features are most associated with
-                    different definitions
-                    of success.
+                    This project uses movie metadata from The Movie Database (TMDB) to explore patterns linking movie
+                    attributes such as genre, runtime, budget, revenue, and release timing to measures of audience
+                    engagement including popularity scores and ratings.
                 </p>
 
                 <h2>Questions to Answer</h2>
+
                 <ol>
                     <li>How are popularity and ratings distributed across the sampled movies?</li>
-                    <li>Do higher-rated movies tend to be more popular, or are these outcomes independent?</li>
-                    <li>Which genres appear most often in the dataset, and how do they differ in popularity and ratings?
-                    </li>
+                    <li>Do higher-rated movies tend to be more popular?</li>
+                    <li>Which genres appear most often in the dataset?</li>
                     <li>Does runtime relate to ratings or popularity?</li>
-                    <li>Are there clear differences in success metrics by release month or year?</li>
-                    <li>How do vote counts relate to rating stability (e.g., high votes vs low votes)?</li>
-                    <li>Do higher-budget films show higher popularity or revenue signals in the sample?</li>
-                    <li>Are revenue values highly skewed, and do extreme outliers dominate summary statistics?</li>
-                    <li>Can “top 25% popularity” be predicted from available features later in the course?</li>
-                    <li>Do genre combinations (e.g., Action + Adventure) appear with consistent success outcomes?</li>
+                    <li>Are there differences in success metrics by release timing?</li>
+                    <li>How do vote counts relate to rating stability?</li>
+                    <li>Do higher-budget films show stronger popularity or revenue signals?</li>
+                    <li>Are revenue values highly skewed?</li>
+                    <li>Can the top-25% popularity label be predicted later using supervised models?</li>
+                    <li>Do certain genre combinations appear consistently with higher success?</li>
                 </ol>
-                
+
             </div>
 
+
             <div class="card">
-                <h2>What the website will contain</h2>
-                <p class="small">
-                    Tabs are required for the full course lifecycle. For Module 1, the main content is in
-                    <b>Introduction</b> and
-                    <b>Data Prep/EDA</b>. Remaining tabs are placeholders until later modules.
+
+                <h2>Project Repository</h2>
+
+                <p>
+                    All datasets, scripts, and outputs used in this project are available in the public GitHub
+                    repository.
                 </p>
-                <hr />
-                <h3>Data sources</h3>
+
                 <ul>
-                    <li>TMDB API: movie lists and movie details endpoints.</li>
-                    <li>Raw + cleaned CSV files (linked in Data Prep/EDA tab).</li>
-                    <li>Python scripts used for collection, cleaning, and plotting (linked in Data Prep/EDA tab).</li>
-                </ul>
-                <h3>Planned outcomes</h3>
-                <ul>
-                    <li>Module 2: PCA + clustering + association rules on genres/keywords.</li>
-                    <li>Modules 3–4: supervised models (DT, NB, SVM, Regression/Ensembles) to predict success labels.
+
+                    <li>
+                        <b>GitHub repository:</b><br>
+                        <a href="https://github.com/codebloodedd/MLproject1" target="_blank">
+                            https://github.com/codebloodedd/MLproject1
+                        </a>
                     </li>
-                    <li>Final: a non-technical conclusion story summarizing insights.</li>
+
+                    <li>
+                        <b>Data collection + cleaning scripts:</b>
+                        <ul>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module2/01_collect_tmdb.py"
+                                    target="_blank">01_collect_tmdb.py</a></li>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module2/02_clean_tmdb.py"
+                                    target="_blank">02_clean_tmdb.py</a></li>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module2/03_eda_tmdb.py"
+                                    target="_blank">03_eda_tmdb.py</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <b>Clean dataset used throughout the project:</b><br>
+                        <a href="https://github.com/codebloodedd/MLproject1/blob/main/data_clean/tmdb_clean.csv"
+                            target="_blank">
+                            tmdb_clean.csv
+                        </a>
+                    </li>
+
                 </ul>
+
+                <h3>Project structure</h3>
+
+                <ul>
+                    <li>Module 1: data collection, cleaning, and exploratory analysis</li>
+                    <li>Module 2: PCA, clustering, and association rule mining</li>
+                    <li>Later modules: supervised models predicting success labels</li>
+                </ul>
+
             </div>
+
         </div>
+
     </div>
 
     <div id="footer-slot"></div>
     <script src="app.js"></script>
+
 </body>
 
 </html>

@@ -9,42 +9,120 @@
 </head>
 
 <body>
-    <div class="nav">
-        <div class="nav-inner">
-            <a class="brand" href="index.html">TMDB Movie Success Project</a>
-            <div class="tabs">
-                <a href="index.html">Introduction</a>
-                <a href="dataprep_eda.html">Data Prep/EDA</a>
-                <a class="active" href="pca.html">PCA</a>
-                <a href="clustering.html">Clustering</a>
-                <a href="arm.html">ARM</a>
-                <a href="dt.html">DT</a>
-                <a href="nb.html">NB</a>
-                <a href="svm.html">SVM</a>
-                <a href="regression.html">Regression</a>
-                <a href="conclusions.html">Conclusions</a>
-            </div>
-        </div>
-    </div>
+    <div id="nav-slot"></div>
 
     <div class="container">
         <div class="hero">
-            <span class="badge">Module 2</span>
-            <h1>PCA</h1>
-            <div class="small">This tab will be completed in Module 2. It will include Overview, Data, Code (linked),
-                and Results.</div>
+            <span class="badge">Dimensionality Reduction</span>
+            <span class="badge">StandardScaler</span>
+            <span class="badge">2D + 3D</span>
+            <h1>PCA (Principal Component Analysis)</h1>
+            <div class="small">
+                PCA reduces a dataset into fewer dimensions (components) while retaining as much variance (information)
+                as possible. This helps visualize structure, identify the strongest weighted directions in the data, and
+                reduce complexity for later modeling.
+            </div>
         </div>
 
         <div class="card" style="margin-top:16px;">
-            <h2>Planned Sections</h2>
-            <ul>
-                <li><b>Overview:</b> explain PCA and how it will reduce feature dimensionality.</li>
-                <li><b>Data:</b> show prepared dataset snippet; link raw + clean.</li>
-                <li><b>Code:</b> link to PCA notebook/script.</li>
-                <li><b>Results:</b> plots and interpretation for movie success patterns.</li>
-            </ul>
+            <h2>What is PCA?</h2>
+            <p>
+                Principal Component Analysis (PCA) is a linear transformation that projects the data into a new set of
+                orthogonal axes called principal components. Each component captures the maximum remaining variance in
+                the data, with PC1 capturing the most, PC2 capturing the next most, and so on. PCA is useful for (1)
+                visualization in 2D/3D, (2) understanding which directions in feature space are most important, and (3)
+                reducing dimensionality while preserving most of the information in the dataset.
+            </p>
         </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>Data Selection & Preparation</h2>
+
+            <p>
+                PCA requires a fully quantitative dataset with no labels. For this project, the cleaned TMDB dataset was
+                filtered down to numeric-only features (dropping categorical columns and labels), then normalized using
+                <b>Sklearn StandardScaler</b> so each feature has mean 0 and standard deviation 1.
+            </p>
+
+            <ul>
+                <li><b>Original cleaned dataset (CSV):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/data_clean/tmdb_clean.csv"
+                        target="_blank" rel="noreferrer">tmdb_clean.csv</a>
+                </li>
+                <li><b>PCA input (numeric-only, unlabeled) (CSV):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/pca/pca_input_numeric_only.csv"
+                        target="_blank" rel="noreferrer">pca_input_numeric_only.csv</a>
+                </li>
+                <li><b>PCA variance table (CSV):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/pca/pca_variance_table.csv"
+                        target="_blank" rel="noreferrer">pca_variance_table.csv</a>
+                </li>
+                <li><b>PCA summary output (TXT):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/pca/pca_summary.txt"
+                        target="_blank" rel="noreferrer">pca_summary.txt</a>
+                </li>
+            </ul>
+
+            <p class="small">
+                PCA code and outputs are stored in:
+                <a href="https://github.com/codebloodedd/MLproject1/tree/main/code/module2" target="_blank"
+                    rel="noreferrer">code/module2</a>
+                and
+                <a href="https://github.com/codebloodedd/MLproject1/tree/main/outputs/module2/pca" target="_blank"
+                    rel="noreferrer">outputs/module2/pca</a>.
+            </p>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>PCA (2D) and PCA (3D)</h2>
+
+            <div class="grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/pca_2d.png" alt="PCA 2D plot">
+                    <figcaption class="figcap">
+                        <b>Figure 1 — PCA (2D).</b> The first 2 principal components retain <b>67.40%</b> of the
+                        variance.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/pca_3d.png" alt="PCA 3D plot">
+                    <figcaption class="figcap">
+                        <b>Figure 2 — PCA (3D).</b> The first 3 principal components retain <b>82.22%</b> of the
+                        variance.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>Explained Variance & 95% Threshold</h2>
+
+            <figure class="figure" style="margin-top:12px;">
+                <img src="assets/images/pca_cumulative.png" alt="Cumulative explained variance">
+                <figcaption class="figcap">
+                    <b>Figure 3 — Cumulative Explained Variance.</b> The dashed line shows the 95% target. Based on the
+                    cumulative curve, <b>5 components</b> are needed to retain at least <b>95%</b> of the variance.
+                </figcaption>
+            </figure>
+
+            <div class="callout" style="margin-top:12px;">
+                <b>Key results:</b>
+                2D retains <code>67.40%</code>, 3D retains <code>82.22%</code>, and <code>5</code> components retain at
+                least <code>95%</code> variance.
+            </div>
+
+            <p class="small" style="margin-top:12px;">
+                These PCA results support later steps by providing a compact representation that is easier to visualize
+                and cluster. The reduced feature space also helps interpret which feature combinations drive the largest
+                variation across movies.
+            </p>
+        </div>
+
     </div>
+
+    <div id="footer-slot"></div>
+    <script src="app.js"></script>
 </body>
 
 </html>

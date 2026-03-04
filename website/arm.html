@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Clustering | TMDB Movie Success</title>
+    <title>ARM | TMDB Movie Success</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,23 +13,205 @@
 
     <div class="container">
         <div class="hero">
-            <span class="badge">Module 2</span>
-            <h1>Clustering</h1>
-            <div class="small">Work in progress — this section will be completed in later modules.</div>
+            <span class="badge">Association Rule Mining</span>
+            <span class="badge">Apriori</span>
+            <span class="badge">Support • Confidence • Lift</span>
+            <h1>ARM (Association Rule Mining)</h1>
+            <div class="small">
+                This section uses Association Rule Mining (ARM) to discover common co-occurrence patterns among movie
+                attributes (genres + binned success indicators). The goal is to find interpretable “if-then” rules that
+                explain which combinations of attributes tend to appear together in the dataset.
+            </div>
         </div>
 
+        <!-- OVERVIEW -->
         <div class="card" style="margin-top:16px;">
-            <h2>Status</h2>
+            <h2>Overview</h2>
+
             <p>
-                Work in progress. This tab will include an overview of clustering, the prepared dataset used, a link to
-                the code,
-                visualized cluster results, and interpretation of what the clusters represent for movie success.
+                Association Rule Mining finds frequent co-occurring items in a dataset and expresses them as rules of
+                the form <b>A → B</b>. In this project, an “item” is a categorical movie attribute such as a genre
+                (e.g., Action, Adventure) or a binned indicator (e.g., HighRevenue, HighRating). A rule A → B means that
+                when movies contain itemset A, they often also contain itemset B. ARM is useful because the output is
+                directly interpretable and can highlight combinations of factors that commonly appear together in the
+                data.
+            </p>
+
+            <p>
+                Three core metrics summarize rule usefulness: <b>support</b> (how often A and B appear together),
+                <b>confidence</b> (how often B appears when A appears), and <b>lift</b> (how much more likely B is given
+                A compared to baseline B). Lift greater than 1 indicates a positive association beyond chance.
+                To find rules efficiently, the <b>Apriori</b> algorithm first discovers frequent itemsets and then
+                generates rules from those itemsets. Apriori works by using the “downward closure” property: if an
+                itemset is infrequent, any larger itemset that contains it must also be infrequent, which allows
+                pruning large portions of the search.
+            </p>
+
+            <div class="grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/arm_support_confidence_lift.png" alt="Support confidence lift explanation">
+                    <figcaption class="figcap">
+                        <b>Figure 1 — Support, Confidence, Lift.</b> These three metrics summarize how common a rule is,
+                        how reliable it is, and whether the association is stronger than chance.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/arm_network_top15_lift.png" alt="ARM network visualization top lift rules">
+                    <figcaption class="figcap">
+                        <b>Figure 2 — Network view of top lift rules.</b> Nodes represent itemsets and edges represent
+                        strong associations. This helps visually identify clusters of co-occurring attributes.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <!-- DATA PREP -->
+        <div class="card" style="margin-top:16px;">
+            <h2>Data Prep</h2>
+
+            <p>
+                ARM requires <b>unlabeled transaction data</b>. Instead of numeric features, the input must be a set of
+                transactions where each row is a “basket” of items. For this project, each transaction represents one
+                movie and contains: (1) its genre tags, and (2) binned indicators such as HighRevenue / HighRating /
+                HighBudget / LongRuntime and release timing categories. This format is required because Apriori is
+                designed to count item co-occurrences.
+            </p>
+
+            <ul>
+                <li><b>Transaction sample (CSV):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/arm/arm_transactions_sample.csv"
+                        target="_blank" rel="noreferrer">arm_transactions_sample.csv</a>
+                </li>
+                <li><b>One-hot matrix used for Apriori (CSV):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/arm/arm_onehot_matrix.csv"
+                        target="_blank" rel="noreferrer">arm_onehot_matrix.csv</a>
+                </li>
+                <li><b>Frequent itemsets (CSV):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/arm/frequent_itemsets.csv"
+                        target="_blank" rel="noreferrer">frequent_itemsets.csv</a>
+                </li>
+            </ul>
+
+            <p class="small">
+                The one-hot matrix is an intermediate step where each unique item becomes a column and each row (movie)
+                becomes a binary vector. Apriori runs on this one-hot representation to compute frequent itemsets and
+                generate rules.
             </p>
         </div>
+
+        <!-- CODE -->
+        <div class="card" style="margin-top:16px;">
+            <h2>Code</h2>
+            <p>
+                The ARM pipeline was implemented in Python using a frequent-itemset mining implementation (Apriori) and
+                rule generation. Code is linked below for repeatability.
+            </p>
+            <ul>
+                <li><b>ARM code (Python):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/arm/arm_rules_to_text.py"
+                        target="_blank" rel="noreferrer">arm_rules_to_text.py</a>
+                </li>
+            </ul>
+
+            <div class="callout">
+                <b>Thresholds used:</b> min_support = <code>0.07</code>, confidence threshold = <code>0.30</code>. Total
+                rules generated: <code>9494</code>.
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="card" style="margin-top:16px;">
+            <h2>Results</h2>
+            <p class="small">
+                The lists below show the top 15 rules by each metric. Support highlights common patterns, confidence
+                highlights reliability, and lift highlights associations that are stronger than chance.
+            </p>
+
+            <h3>Top 15 rules by Support</h3>
+            <ol class="rules">
+                <li>NotPopularTop25 → NonSummerRelease (support=0.601, confidence=0.804, lift=1.007)</li>
+                <li>NonSummerRelease → NotPopularTop25 (support=0.601, confidence=0.753, lift=1.007)</li>
+                <li>LowRating → NonSummerRelease (support=0.468, confidence=0.836, lift=1.047)</li>
+                <li>NonSummerRelease → LowRating (support=0.468, confidence=0.586, lift=1.047)</li>
+                <li>HighBudget → HighRevenue (support=0.440, confidence=0.881, lift=1.729)</li>
+                <li>HighRevenue → HighBudget (support=0.440, confidence=0.865, lift=1.729)</li>
+                <li>LowBudget → LowRevenue (support=0.431, confidence=0.862, lift=1.757)</li>
+                <li>LowRevenue → LowBudget (support=0.431, confidence=0.879, lift=1.757)</li>
+                <li>LowBudget → NotPopularTop25 (support=0.417, confidence=0.834, lift=1.111)</li>
+                <li>NotPopularTop25 → LowBudget (support=0.417, confidence=0.558, lift=1.111)</li>
+                <li>ShortRuntime → NonSummerRelease (support=0.413, confidence=0.833, lift=1.044)</li>
+                <li>NonSummerRelease → ShortRuntime (support=0.413, confidence=0.517, lift=1.044)</li>
+                <li>LowRevenue → NonSummerRelease (support=0.408, confidence=0.832, lift=1.042)</li>
+                <li>NonSummerRelease → LowRevenue (support=0.408, confidence=0.511, lift=1.042)</li>
+                <li>LowRating → NotPopularTop25 (support=0.408, confidence=0.730, lift=0.973)</li>
+            </ol>
+
+            <h3 style="margin-top:16px;">Top 15 rules by Confidence</h3>
+            <ol class="rules">
+                <li>HighRevenue → HighBudget (support=0.440, confidence=0.865, lift=1.729)</li>
+                <li>LowRevenue → LowBudget (support=0.431, confidence=0.879, lift=1.757)</li>
+                <li>HighBudget → HighRevenue (support=0.440, confidence=0.881, lift=1.729)</li>
+                <li>LowBudget → LowRevenue (support=0.431, confidence=0.862, lift=1.757)</li>
+                <li>LowRating → NonSummerRelease (support=0.468, confidence=0.836, lift=1.047)</li>
+                <li>LowBudget → NotPopularTop25 (support=0.417, confidence=0.834, lift=1.111)</li>
+                <li>ShortRuntime → NonSummerRelease (support=0.413, confidence=0.833, lift=1.044)</li>
+                <li>LowRevenue → NonSummerRelease (support=0.408, confidence=0.832, lift=1.042)</li>
+                <li>NotPopularTop25 → NonSummerRelease (support=0.601, confidence=0.804, lift=1.007)</li>
+                <li>Action, HighBudget, HighRevenue → NotPopularTop25 (support=0.092, confidence=0.802, lift=1.068)</li>
+                <li>NonSummerRelease → NotPopularTop25 (support=0.601, confidence=0.753, lift=1.007)</li>
+                <li>HighBudget, Action → NotPopularTop25 (support=0.092, confidence=0.752, lift=1.002)</li>
+                <li>LowRating → NotPopularTop25 (support=0.408, confidence=0.730, lift=0.973)</li>
+                <li>HighRating, Action → NotPopularTop25 (support=0.073, confidence=0.727, lift=0.969)</li>
+                <li>HighRating, Adventure → NotPopularTop25 (support=0.073, confidence=0.709, lift=0.945)</li>
+            </ol>
+
+            <h3 style="margin-top:16px;">Top 15 rules by Lift</h3>
+            <ol class="rules">
+                <li>LowBudget → LowRevenue (support=0.431, confidence=0.862, lift=1.757)</li>
+                <li>LowRevenue → LowBudget (support=0.431, confidence=0.879, lift=1.757)</li>
+                <li>HighBudget → HighRevenue (support=0.440, confidence=0.881, lift=1.729)</li>
+                <li>HighRevenue → HighBudget (support=0.440, confidence=0.865, lift=1.729)</li>
+                <li>Action, HighBudget → HighRevenue (support=0.092, confidence=0.500, lift=1.976)</li>
+                <li>Action, HighRevenue → HighBudget (support=0.092, confidence=0.509, lift=1.017)</li>
+                <li>Adventure, HighBudget → LongRuntime (support=0.073, confidence=0.504, lift=1.243)</li>
+                <li>Action, HighRating → HighRevenue (support=0.073, confidence=0.509, lift=1.001)</li>
+                <li>HighRating, Action → NonSummerRelease (support=0.073, confidence=0.510, lift=0.639)</li>
+                <li>HighBudget → NotPopularTop25 (support=0.095, confidence=0.503, lift=0.670)</li>
+                <li>HighRating → NotPopularTop25 (support=0.092, confidence=0.505, lift=0.673)</li>
+                <li>HighRevenue → NotPopularTop25 (support=0.092, confidence=0.503, lift=0.670)</li>
+                <li>LongRuntime → NotPopularTop25 (support=0.096, confidence=0.504, lift=0.671)</li>
+                <li>Adventure, HighRevenue → LongRuntime (support=0.073, confidence=0.510, lift=1.259)</li>
+                <li>HighRating, NotPopularTop25 → Science Fiction (support=0.073, confidence=0.504, lift=1.077)</li>
+            </ol>
+
+            <p class="small" style="margin-top:12px;">
+                Full rules output:
+                <a href="https://github.com/codebloodedd/MLproject1/blob/main/outputs/module2/arm/all_rules.csv"
+                    target="_blank" rel="noreferrer">all_rules.csv</a>.
+            </p>
+        </div>
+
+        <!-- CONCLUSIONS -->
+        <div class="card" style="margin-top:16px;">
+            <h2>Conclusions (Topic Connection)</h2>
+            <p>
+                ARM produces interpretable “bundles” of features that tend to appear together (for example, certain
+                genre
+                combinations alongside binned success indicators such as HighRevenue or HighRating). These patterns help
+                support the project’s core question—what makes a movie “successful”—by identifying recurring
+                combinations
+                that align with different notions of success (popularity vs ratings). In later modules, these insights
+                can inform feature engineering, cluster interpretation, and the choice of predictors for supervised
+                models.
+            </p>
+        </div>
+
     </div>
 
     <div id="footer-slot"></div>
     <script src="app.js"></script>
+
 </body>
 
 </html>

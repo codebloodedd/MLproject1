@@ -13,213 +13,140 @@
 
     <div class="container">
         <div class="hero">
-            <span class="badge">TMDB API</span>
-            <span class="badge">Cleaning + Prep</span>
+            <span class="badge">API + Raw Data</span>
+            <span class="badge">Cleaning</span>
             <span class="badge">10 Visualizations</span>
             <h1>Data Prep / Exploratory Data Analysis</h1>
             <div class="small">
-                This section documents the dataset creation pipeline end-to-end: API collection, raw-to-clean
-                transformations,
-                and exploratory visualizations used to understand the data and validate data quality.
+                This section documents where the data came from, how it was collected using an API, how it was cleaned,
+                and what the early visual exploration shows.
             </div>
         </div>
 
-        <!-- DATA SOURCES -->
         <div class="card" style="margin-top:16px;">
             <h2>Data Sources and Links (repeatability)</h2>
-            <p class="small">
-                The project is designed to be reproducible: the API endpoints, raw data, cleaned data, and Python
-                scripts are all linked
-                so another person can regenerate the dataset and plots.
-            </p>
-
             <ul>
-                <li>
-                    TMDB API documentation:
+                <li>TMDB API documentation:
                     <a href="https://developer.themoviedb.org/docs" target="_blank"
                         rel="noreferrer">developer.themoviedb.org</a>
                 </li>
 
-                <li>
-                    <b>GitHub repo (code + data):</b>
-                    <a href="PASTE_YOUR_GITHUB_REPO_LINK" target="_blank" rel="noreferrer">link</a>
+                <li><b>GitHub repo (code + data):</b>
+                    <a href="https://github.com/codebloodedd/MLproject1" target="_blank" rel="noreferrer">MLproject1</a>
                 </li>
 
                 <li><b>Raw data:</b>
                     <ul>
-                        <li>
-                            <a href="PASTE_LINK_TO_data_raw/tmdb_popular_raw.csv" target="_blank" rel="noreferrer">
-                                tmdb_popular_raw.csv
-                            </a>
-                            <span class="small"> — popular movies list endpoint response (flattened to CSV)</span>
-                        </li>
-                        <li>
-                            <a href="PASTE_LINK_TO_data_raw/tmdb_enriched_raw.csv" target="_blank" rel="noreferrer">
-                                tmdb_enriched_raw.csv
-                            </a>
-                            <span class="small"> — merged dataset with additional movie details
-                                (runtime/budget/revenue/genres)</span>
-                        </li>
+                        <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/data_raw/tmdb_popular_raw.csv"
+                                target="_blank" rel="noreferrer">tmdb_popular_raw.csv</a></li>
+                        <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/data_raw/tmdb_enriched_raw.csv"
+                                target="_blank" rel="noreferrer">tmdb_enriched_raw.csv</a></li>
                     </ul>
                 </li>
 
-                <li>
-                    <b>Clean data:</b>
-                    <a href="PASTE_LINK_TO_data_clean/tmdb_clean.csv" target="_blank"
-                        rel="noreferrer">tmdb_clean.csv</a>
+                <li><b>Clean data:</b>
+                    <a href="https://github.com/codebloodedd/MLproject1/blob/main/data_clean/tmdb_clean.csv"
+                        target="_blank" rel="noreferrer">tmdb_clean.csv</a>
                 </li>
 
-                <li><b>Python scripts:</b>
+                <li><b>Python code:</b>
                     <ul>
-                        <li><a href="PASTE_LINK_TO_code/01_collect_tmdb.py" target="_blank"
-                                rel="noreferrer">01_collect_tmdb.py</a></li>
-                        <li><a href="PASTE_LINK_TO_code/02_clean_tmdb.py" target="_blank"
-                                rel="noreferrer">02_clean_tmdb.py</a></li>
-                        <li><a href="PASTE_LINK_TO_code/03_eda_tmdb.py" target="_blank"
-                                rel="noreferrer">03_eda_tmdb.py</a></li>
+                        <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/01_collect_tmdb.py"
+                                target="_blank" rel="noreferrer">01_collect_tmdb.py</a></li>
+                        <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/02_clean_tmdb.py"
+                                target="_blank" rel="noreferrer">02_clean_tmdb.py</a></li>
+                        <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/03_eda_tmdb.py"
+                                target="_blank" rel="noreferrer">03_eda_tmdb.py</a></li>
                     </ul>
                 </li>
             </ul>
-        </div>
 
-        <!-- API DETAILS -->
-        <div class="card" style="margin-top:16px;">
             <h2>API Requirement (endpoint + example GET)</h2>
-            <p>
-                Data was collected from TMDB using a two-step approach: first collect a list of popular movies, then
-                enrich each movie using
-                its TMDB <code>movie_id</code>.
-            </p>
-
+            <p>Data was collected from TMDB using two core endpoints:</p>
             <ul>
-                <li><code>GET https://api.themoviedb.org/3/movie/popular</code> — collects pages of popular movies (core
-                    list data)</li>
-                <li><code>GET https://api.themoviedb.org/3/movie/{movie_id}</code> — adds details such as runtime,
-                    budget, revenue, and genres</li>
+                <li><code>GET https://api.themoviedb.org/3/movie/popular</code> (collects pages of popular movies)</li>
+                <li><code>GET https://api.themoviedb.org/3/movie/{movie_id}</code> (enriches each movie with runtime,
+                    budget, revenue, genres)</li>
             </ul>
 
             <p><b>Example GET request (template):</b></p>
             <pre
-                style="white-space:pre-wrap;background:rgba(255,255,255,0.03);padding:12px;border-radius:14px;border:1px solid var(--border);">
-https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=1
-      </pre>
+                style="white-space:pre-wrap;background:rgba(255,255,255,0.03);padding:12px;border-radius:14px;border:1px solid var(--border);">https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=1</pre>
 
             <p class="small">
-                The API key is not shown publicly. The raw JSON responses were flattened into CSV files for transparency
-                and repeatability.
+                The API key is not shown publicly. The raw JSON response was converted to CSV and stored as raw data.
             </p>
         </div>
 
-        <!-- RAW vs CLEAN WITH SCREENSHOTS -->
         <div class="card" style="margin-top:16px;">
             <h2>RAW vs CLEAN Data (screenshots)</h2>
             <p class="small">
-                The figures below show small snapshots of the dataset at different stages. These are screenshots only
-                (not full datasets).
+                The screenshots below show small samples (first rows) of the raw and cleaned CSV files.
             </p>
 
-            <figure class="figure" style="margin-top:10px;">
-                <img src="assets/images/popular_raw.png" alt="Raw popular movies CSV screenshot">
-                <figcaption class="figcap">
-                    <b>RAW Stage 1 — Popular List (tmdb_popular_raw.csv).</b>
-                    This dataset comes directly from the “popular” endpoint. It includes basic identifiers and
-                    engagement fields
-                    such as popularity, vote count, and average rating.
-                </figcaption>
-            </figure>
+            <div class="grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/popular_raw.png" alt="Raw popular CSV preview">
+                    <figcaption class="figcap">
+                        <b>RAW (popular)</b> — Preview of <code>tmdb_popular_raw.csv</code>.
+                    </figcaption>
+                </figure>
 
-            <figure class="figure" style="margin-top:12px;">
-                <img src="assets/images/popular_enriched.png" alt="Enriched raw CSV screenshot">
-                <figcaption class="figcap">
-                    <b>RAW Stage 2 — Enriched Dataset (tmdb_enriched_raw.csv).</b>
-                    Each movie from Stage 1 was enriched using its <code>movie_id</code> to add features required for
-                    later modeling,
-                    such as runtime, budget, revenue, and genre information.
-                </figcaption>
-            </figure>
+                <figure class="figure">
+                    <img src="assets/images/popular_enriched.png" alt="Raw enriched CSV preview">
+                    <figcaption class="figcap">
+                        <b>RAW (enriched)</b> — Preview of <code>tmdb_enriched_raw.csv</code>.
+                    </figcaption>
+                </figure>
 
-            <figure class="figure" style="margin-top:12px;">
-                <img src="assets/images/clean.png" alt="Clean CSV screenshot">
-                <figcaption class="figcap">
-                    <b>CLEAN Stage — Modeling Dataset (tmdb_clean.csv).</b>
-                    The cleaned dataset standardizes datatypes, removes missing values, and adds labels to support
-                    supervised learning later.
-                </figcaption>
-            </figure>
+                <figure class="figure">
+                    <img src="assets/images/clean.png" alt="Clean CSV preview">
+                    <figcaption class="figcap">
+                        <b>CLEAN</b> — Preview of <code>tmdb_clean.csv</code>.
+                    </figcaption>
+                </figure>
+            </div>
         </div>
 
-        <!-- CLEANING DOC -->
         <div class="card" style="margin-top:16px;">
-            <h2>Cleaning + Preparation (what was done and why)</h2>
-
-            <p>
-                The raw API data is not immediately usable for analysis because it contains mixed datatypes (numbers
-                stored as strings),
-                inconsistent missing values, and extreme outliers (especially for budget and revenue). Cleaning was
-                performed in Python to
-                produce a single modeling-ready table with consistent datatypes and no missing values.
-            </p>
-
-            <h3>Key cleaning actions</h3>
+            <h2>Cleaning Summary</h2>
             <ul>
-                <li>
-                    <b>Type normalization:</b> converted numeric columns such as
-                    <code>popularity</code>, <code>vote_average</code>, <code>vote_count</code>, <code>runtime</code>,
-                    <code>budget</code>, and
-                    <code>revenue</code> into true numeric types so plots and models work correctly.
-                </li>
-                <li>
-                    <b>Missing value handling:</b> filled missing numeric values using the median to remove NaNs while
-                    keeping all rows.
-                    This avoids dropping movies and keeps the dataset consistent for later models.
-                </li>
-                <li>
-                    <b>Category cleanup:</b> standardized text fields such as title/genres and filled missing categories
-                    with a placeholder.
-                </li>
-                <li>
-                    <b>Outlier stability:</b> capped extreme budget and revenue values at the 99th percentile.
-                    This keeps a few blockbuster-level movies from dominating early EDA and makes later modeling more
-                    stable.
-                </li>
-            </ul>
-
-            <h3>Labels created for later supervised learning</h3>
-            <ul>
-                <li>
-                    <code>label_popular_top25</code>: 1 if a movie’s popularity is in the top 25% of the dataset, else
-                    0.
-                    This creates a clear “high popularity” success label.
-                </li>
-                <li>
-                    <code>label_high_rating</code>: 1 if <code>vote_average ≥ 7.0</code>, else 0.
-                    This creates a separate success label based on audience approval.
+                <li>Converted numeric fields (popularity, vote_average, vote_count, runtime, budget, revenue) to numeric
+                    types.</li>
+                <li>Filled missing numeric values with the median to remove NaNs while keeping all rows.</li>
+                <li>Standardized text fields (title/genres/language) and filled missing categories.</li>
+                <li>Capped extreme budget and revenue outliers at the 99th percentile for stability in plots and later
+                    models.</li>
+                <li>Created labels:
+                    <ul>
+                        <li><code>label_popular_top25</code>: 1 if popularity in top 25% of the dataset.</li>
+                        <li><code>label_high_rating</code>: 1 if vote_average ≥ 7.0.</li>
+                    </ul>
                 </li>
             </ul>
 
             <p class="small">
-                These labels make the dataset usable for later classification models (Decision Trees, Naive Bayes, SVMs,
-                Regression/Ensembles),
-                while the numeric features support PCA, clustering, and other unsupervised methods.
+                This cleaned dataset is used throughout the rest of the project. Standardized numeric columns support
+                PCA and clustering, while the labels support supervised learning models. The early visualizations also
+                guide later choices (e.g., handling skew and outliers, selecting feature transformations, and deciding
+                which variables may be most informative).
             </p>
         </div>
 
-        <!-- VIS -->
         <div class="card" style="margin-top:16px;">
             <h2>Exploratory Visualizations (10 required)</h2>
             <p class="small">
-                These visualizations serve two purposes: (1) understand distributions and relationships in the dataset,
-                and (2) validate that
-                cleaning decisions (missing value handling, outlier caps, datatypes) produced sensible results.
+                Each figure below includes a title and a brief explanation. All figures were generated in Python and
+                saved as PNG.
             </p>
 
             <!-- 1 -->
             <figure class="figure">
                 <img src="assets/images/01_popularity_hist.png" alt="Popularity distribution">
                 <figcaption class="figcap">
-                    <b>Figure 1 — Popularity Distribution.</b> Popularity is right-skewed: most movies have moderate
-                    popularity and a smaller
-                    set of movies have very high popularity. This supports creating a “top popularity” label.
+                    <b>Figure 1 — Popularity Distribution.</b> Popularity values are concentrated in a moderate range
+                    with a tail of very high popularity titles. This suggests that “success” by popularity may be skewed
+                    and influenced by extreme cases.
                 </figcaption>
             </figure>
 
@@ -227,9 +154,8 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/02_rating_hist.png" alt="Rating distribution">
                 <figcaption class="figcap">
-                    <b>Figure 2 — Rating Distribution.</b> Ratings are concentrated around mid-to-high values. This
-                    motivates a threshold label
-                    (e.g., ≥ 7.0) to separate strong audience approval from average reception.
+                    <b>Figure 2 — Rating Distribution.</b> Ratings cluster around mid-to-high values, indicating many
+                    movies receive average-to-good audience reception. Extremely low or high ratings are less common.
                 </figcaption>
             </figure>
 
@@ -237,9 +163,8 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/03_vote_count_hist.png" alt="Vote count distribution">
                 <figcaption class="figcap">
-                    <b>Figure 3 — Vote Count Distribution.</b> Vote counts vary widely. Models may treat vote count as a
-                    confidence proxy
-                    (ratings with many votes are typically more stable than ratings with few votes).
+                    <b>Figure 3 — Vote Count Distribution.</b> Vote counts vary substantially. This matters because
+                    ratings based on very few votes can be less stable than ratings based on larger audiences.
                 </figcaption>
             </figure>
 
@@ -247,9 +172,9 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/04_popularity_vs_rating.png" alt="Popularity vs rating">
                 <figcaption class="figcap">
-                    <b>Figure 4 — Popularity vs Rating.</b> Popularity and ratings are not identical signals of success;
-                    some movies are popular
-                    without being highly rated and vice versa. This supports using multiple definitions of “success.”
+                    <b>Figure 4 — Popularity vs Rating.</b> The relationship appears weak-to-moderate, suggesting that
+                    highly popular films are not always the highest-rated. Popularity and ratings capture different
+                    aspects of success.
                 </figcaption>
             </figure>
 
@@ -257,9 +182,8 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/05_runtime_hist.png" alt="Runtime distribution">
                 <figcaption class="figcap">
-                    <b>Figure 5 — Runtime Distribution.</b> Runtime clusters around typical feature length. Runtime is a
-                    useful numeric feature for
-                    PCA/clustering and may interact with genre preferences.
+                    <b>Figure 5 — Runtime Distribution.</b> Most films fall into a typical feature-length range.
+                    Runtime may influence audience engagement differently depending on genre and pacing.
                 </figcaption>
             </figure>
 
@@ -267,9 +191,8 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/06_budget_box.png" alt="Budget boxplot">
                 <figcaption class="figcap">
-                    <b>Figure 6 — Budget (Boxplot).</b> Budget contains extreme outliers. Capping at the 99th percentile
-                    reduces the influence of
-                    very large values and makes visual summaries more representative.
+                    <b>Figure 6 — Budget (Boxplot).</b> Budgets show strong skew and outliers. Capping extreme values
+                    improves stability in plots and helps prevent a small number of movies from dominating summaries.
                 </figcaption>
             </figure>
 
@@ -277,9 +200,8 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/07_revenue_box.png" alt="Revenue boxplot">
                 <figcaption class="figcap">
-                    <b>Figure 7 — Revenue (Boxplot).</b> Revenue is strongly skewed. This indicates future steps may
-                    benefit from robust scaling
-                    or transformations when building models.
+                    <b>Figure 7 — Revenue (Boxplot).</b> Revenue is highly skewed and dominated by a few very large
+                    values, supporting the use of robust statistics and potential transformations in later modeling.
                 </figcaption>
             </figure>
 
@@ -287,9 +209,8 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/08_popularity_by_month.png" alt="Popularity by month">
                 <figcaption class="figcap">
-                    <b>Figure 8 — Popularity by Release Month.</b> Popularity differs across months, suggesting that
-                    release timing may correlate
-                    with audience attention (seasonality), which can be tested later.
+                    <b>Figure 8 — Popularity by Release Month.</b> Average popularity varies by month, suggesting that
+                    release timing may be associated with audience attention and visibility (seasonality effects).
                 </figcaption>
             </figure>
 
@@ -297,9 +218,8 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/09_label_popular_top25.png" alt="Top 25 percent popularity label distribution">
                 <figcaption class="figcap">
-                    <b>Figure 9 — Popularity Label (Top 25%).</b> This shows how many movies fall into the
-                    top-popularity class. A reasonably
-                    balanced label helps later supervised models learn meaningful patterns.
+                    <b>Figure 9 — Popularity Label (Top 25%).</b> This chart shows the distribution of the binary label
+                    <code>label_popular_top25</code>, which will be used later for supervised learning tasks.
                 </figcaption>
             </figure>
 
@@ -307,27 +227,12 @@ https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&language=en-US&page=
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/10_top_genres.png" alt="Top genres">
                 <figcaption class="figcap">
-                    <b>Figure 10 — Most Common Genres.</b> Genre frequency provides context for the dataset composition
-                    and motivates later work
-                    with one-hot encoding, association rules, and clustering by genre mixtures.
+                    <b>Figure 10 — Most Common Genres.</b> The most frequent genres provide context for later modeling.
+                    Genre distributions also help interpret differences in popularity and ratings across movie
+                    categories.
                 </figcaption>
             </figure>
 
-            <h3 style="margin-top:16px;">How this helps the next modules</h3>
-            <ul>
-                <li><b>PCA:</b> numeric features (popularity, votes, runtime, budget, revenue) can be scaled and reduced
-                    to study which factors
-                    explain most variance.</li>
-                <li><b>Clustering:</b> cleaned numeric columns + genre encodings can group movies into “types” (e.g.,
-                    high-budget/high-revenue vs
-                    low-budget niche films).</li>
-                <li><b>ARM:</b> genres and (later) keywords can be treated as items to discover common genre
-                    combinations and their association
-                    with success labels.</li>
-                <li><b>Supervised models:</b> the labels created here (<code>label_popular_top25</code>,
-                    <code>label_high_rating</code>) enable
-                    classification experiments using DT/NB/SVM/Regression to predict success from features.</li>
-            </ul>
         </div>
 
     </div>
