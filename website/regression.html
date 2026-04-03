@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Clustering | TMDB Movie Success</title>
+    <title>Regression | TMDB Movie Success</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,23 +13,185 @@
 
     <div class="container">
         <div class="hero">
-            <span class="badge">Module 2</span>
-            <h1>Clustering</h1>
-            <div class="small">Work in progress — this section will be completed in later modules.</div>
+            <span class="badge">Module 3</span>
+            <span class="badge">Regression</span>
+            <span class="badge">Model Comparison</span>
+            <h1>Regression</h1>
+            <div class="small">
+                This section answers the required regression questions and then compares Logistic Regression,
+                Multinomial Naive Bayes, and Decision Tree classification on the same two-class movie dataset.
+            </div>
         </div>
 
         <div class="card" style="margin-top:16px;">
-            <h2>Status</h2>
+            <h2>Regression Questions and Overview</h2>
+
+            <div class="qa-grid" style="margin-top:12px;">
+                <div class="qa">
+                    <h3>(a) What is linear regression?</h3>
+                    <p>
+                        Linear regression models the relationship between one continuous target variable and one or more
+                        input features using a straight-line equation. It predicts numeric values, such as revenue,
+                        price, or temperature. The model estimates coefficients that show how much the target changes
+                        when a feature changes while the others are held constant.
+                    </p>
+                </div>
+
+                <div class="qa">
+                    <h3>(b) What is logistic regression?</h3>
+                    <p>
+                        Logistic regression is a classification model used when the target is categorical, especially for
+                        two classes such as yes/no or 0/1. Instead of predicting any real number directly, it predicts a
+                        probability that an observation belongs to the positive class. That probability is then converted
+                        into a class label using a threshold such as 0.5.
+                    </p>
+                </div>
+
+                <div class="qa">
+                    <h3>(c) How are they similar and different?</h3>
+                    <p>
+                        Both models connect features to an outcome using a weighted linear combination of inputs, so they
+                        are similar in structure and interpretation. The main difference is the output: linear
+                        regression predicts continuous values, while logistic regression predicts class probabilities for
+                        categorical outcomes. Linear regression is used for numeric prediction, but logistic regression is
+                        used for classification.
+                    </p>
+                </div>
+
+                <div class="qa">
+                    <h3>(d) Does logistic regression use the sigmoid function?</h3>
+                    <p>
+                        Yes. Logistic regression uses the sigmoid function to map the linear score into a probability
+                        between 0 and 1. This is what lets the model interpret the result as the probability of the
+                        positive class. Without the sigmoid, the output would not stay inside the probability range.
+                    </p>
+                </div>
+
+                <div class="qa">
+                    <h3>(e) How is maximum likelihood connected?</h3>
+                    <p>
+                        Logistic regression estimates its coefficients by maximizing the likelihood of the observed class
+                        labels. In simple terms, it chooses the coefficient values that make the observed training labels
+                        as probable as possible under the model. That is why logistic regression is commonly trained by
+                        minimizing log loss, which is directly connected to maximum likelihood estimation.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>Data Preparation and Code</h2>
+
             <p>
-                Work in progress. This tab will include an overview of clustering, the prepared dataset used, a link to
-                the code,
-                visualized cluster results, and interpretation of what the clusters represent for movie success.
+                I chose the same binary label used throughout Module 3: <code>label_popular_top25</code>. This is a
+                valid two-category target because every movie is either in the top 25% of popularity or not. As in the
+                NB and DT sections, I removed duplicate movie IDs first, leaving <b>191 unique movies</b>, then created a
+                stratified split of <b>143 training rows</b> and <b>48 testing rows</b>.
+            </p>
+
+            <p>
+                Logistic regression needs numeric input, so I used numeric movie features plus one-hot genre indicators.
+                Skewed features such as vote_count, budget, and revenue were log-transformed, and then the feature set
+                was standardized before fitting logistic regression. For the comparison portion, I evaluated logistic
+                regression, Multinomial NB, and the best-performing decision tree on the same disjoint split.
+            </p>
+
+            <ul>
+                <li><b>Prepared dataset:</b> <a href="assets/data/module3/module3_modeling_dataset.csv" target="_blank">module3_modeling_dataset.csv</a></li>
+                <li><b>Split summary:</b> <a href="assets/data/module3/train_test_split_summary.json" target="_blank">train_test_split_summary.json</a></li>
+                <li><b>Code:</b> <a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module3/07_supervised_tmdb.py" target="_blank" rel="noreferrer">07_supervised_tmdb.py</a></li>
+                <li><b>Comparison metrics:</b> <a href="assets/data/module3/regression_model_comparison.csv" target="_blank">regression_model_comparison.csv</a></li>
+                <li><b>Top logistic coefficients:</b> <a href="assets/data/module3/logistic_top_coefficients.csv" target="_blank">logistic_top_coefficients.csv</a></li>
+            </ul>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/train_test_split.png" alt="Regression train test split">
+                    <figcaption class="figcap">
+                        <b>Shared train/test split.</b> The same disjoint split is used so the model comparison is fair.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/test_preview.png" alt="Regression testing set preview">
+                    <figcaption class="figcap">
+                        <b>Held-out testing sample.</b> These movies are not used during training.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>Results</h2>
+
+            <p>
+                I chose the second option for this assignment section and compared all three models: Decision Tree,
+                Logistic Regression, and Multinomial Naive Bayes. The best model was the <b>Decision Tree</b> with
+                <b>0.7917 accuracy</b>. Logistic Regression and Multinomial NB both reached <b>0.7292 accuracy</b> on the
+                same held-out test set.
+            </p>
+
+            <div class="stats-grid" style="margin-top:14px;">
+                <div class="stat">
+                    <div class="stat-label">Best model</div>
+                    <div class="stat-value">Decision Tree</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Decision Tree accuracy</div>
+                    <div class="stat-value">0.7917</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Logistic accuracy</div>
+                    <div class="stat-value">0.7292</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Multinomial NB accuracy</div>
+                    <div class="stat-value">0.7292</div>
+                </div>
+            </div>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/regression_model_confusion_matrices.png" alt="Regression comparison confusion matrices">
+                    <figcaption class="figcap">
+                        <b>Confusion matrices.</b> The tree model handled the class separation a little better than the
+                        other two models on this dataset.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/regression_accuracy_comparison.png" alt="Regression accuracy comparison">
+                    <figcaption class="figcap">
+                        <b>Accuracy comparison.</b> Decision Tree finished first, while Logistic Regression and
+                        Multinomial NB tied.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <p>
+                Logistic regression was still valuable because it gave an interpretable coefficient-based view of the
+                data. The strongest positive coefficients were linked to <b>release_year</b>, <b>budget</b>,
+                <b>Adventure</b>, and <b>vote_average</b>, which suggests that newer releases and some large-scale genre
+                patterns were associated with being in the top popularity group. Even though logistic regression was not
+                the best model here, it remains useful because the coefficients are easier to explain than a large tree.
+            </p>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>Conclusions</h2>
+
+            <p>
+                For this project, decision trees worked best on the movie popularity label, which suggests that a small
+                number of nonlinear split rules captured the signal better than a fully linear boundary. Logistic
+                regression still provided a clean probabilistic baseline and a more interpretable global view of the
+                feature effects. Overall, the comparison shows that there is usable predictive structure in the dataset,
+                but the best-performing model depends on how that structure is represented.
             </p>
         </div>
     </div>
 
     <div id="footer-slot"></div>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260402b"></script>
 </body>
 
 </html>

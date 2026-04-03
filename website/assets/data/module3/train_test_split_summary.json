@@ -1,0 +1,10 @@
+{
+  "rows_before_dedup": 218,
+  "rows_after_dedup": 191,
+  "duplicates_removed": 27,
+  "train_rows": 143,
+  "test_rows": 48,
+  "train_ids_overlap_test_ids": 0,
+  "target_name": "label_popular_top25",
+  "target_rate": 0.2408
+}

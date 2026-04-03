@@ -1,40 +1,61 @@
-function basePath() {
-  // If your site is served from /<repo>/ and your files are in /website,
-  // then index.html URL will include "/website/".
-  const path = window.location.pathname;
-  return path.includes("/website/") ? "website/" : "";
-}
+﻿const NAV_HTML = `
+<div class="nav">
+  <div class="nav-inner">
+    <div class="tabs full">
+      <a data-page="index.html" href="index.html">Introduction</a>
+      <a data-page="dataprep_eda.html" href="dataprep_eda.html">Data Prep/EDA</a>
+      <a data-page="pca.html" href="pca.html">PCA</a>
+      <a data-page="clustering.html" href="clustering.html">Clustering</a>
+      <a data-page="arm.html" href="arm.html">ARM</a>
+      <a data-page="dt.html" href="dt.html">DT</a>
+      <a data-page="nb.html" href="nb.html">NB</a>
+      <a data-page="svm.html" href="svm.html">SVM</a>
+      <a data-page="regression.html" href="regression.html">Regression</a>
+      <a data-page="conclusions.html" href="conclusions.html">Conclusions</a>
+      <a data-page="about.html" href="about.html">About Me</a>
+    </div>
+  </div>
+</div>
+`;
 
-async function loadPartial(id, relPath) {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  const base = basePath();
-  const url = base + relPath;
-
-  try {
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
-    el.innerHTML = await res.text();
-  } catch (err) {
-    el.innerHTML = `<div style="padding:12px;border:1px solid rgba(255,255,255,0.15);border-radius:12px;margin:12px;max-width:1100px;color:#b8c2e6;">
-      <b>Nav/Footer failed to load.</b><br/>
-      Tried: <code>${url}</code><br/>
-      Error: <code>${String(err)}</code><br/><br/>
-      Fix: ensure <code>partials/nav.html</code> and <code>partials/footer.html</code> exist inside the same folder as this page, and open via a server (not file://).
-    </div>`;
-  }
-}
+const FOOTER_HTML = `
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-title">Pratham Tushar Shah</div>
+      <div class="footer-sub">Machine Learning Project - Modules 1 to 3</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://willowy-tiramisu-66795c.netlify.app/" target="_blank" rel="noreferrer">Portfolio</a>
+      <a href="https://www.linkedin.com/in/pratham-s-249611396/" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="https://github.com/codebloodedd" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+  </div>
+</footer>
+`;
 
 function setActiveNav() {
   const current = window.location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".tabs a[data-page]").forEach((a) => {
-    if (a.getAttribute("data-page") === current) a.classList.add("active");
+    if (a.getAttribute("data-page") === current) {
+      a.classList.add("active");
+    }
   });
 }
 
-(async function initLayout() {
-  await loadPartial("nav-slot", "partials/nav.html");
-  await loadPartial("footer-slot", "partials/footer.html");
+function injectLayout() {
+  const navSlot = document.getElementById("nav-slot");
+  const footerSlot = document.getElementById("footer-slot");
+
+  if (navSlot) {
+    navSlot.innerHTML = NAV_HTML;
+  }
+
+  if (footerSlot) {
+    footerSlot.innerHTML = FOOTER_HTML;
+  }
+
   setActiveNav();
-})();
+}
+
+injectLayout();

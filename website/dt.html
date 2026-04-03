@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Clustering | TMDB Movie Success</title>
+    <title>Decision Trees | TMDB Movie Success</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,23 +13,222 @@
 
     <div class="container">
         <div class="hero">
-            <span class="badge">Module 2</span>
-            <h1>Clustering</h1>
-            <div class="small">Work in progress — this section will be completed in later modules.</div>
+            <span class="badge">Module 3</span>
+            <span class="badge">Decision Tree Modeling</span>
+            <span class="badge">3 Tree Variants</span>
+            <h1>Decision Trees</h1>
+            <div class="small">
+                This section uses decision trees to classify whether a movie belongs to the top 25% of popularity and to
+                show how different split choices can create different tree structures.
+            </div>
         </div>
 
         <div class="card" style="margin-top:16px;">
-            <h2>Status</h2>
+            <h2>(a) Overview</h2>
+
             <p>
-                Work in progress. This tab will include an overview of clustering, the prepared dataset used, a link to
-                the code,
-                visualized cluster results, and interpretation of what the clusters represent for movie success.
+                A decision tree is a supervised learning model that repeatedly splits the data into smaller groups based
+                on the feature and threshold that best separate the classes. The final result is a tree of if/then
+                rules, which makes the model easy to interpret. In this project, the tree asks questions about movie
+                attributes and predicts whether a movie is likely to be in the top 25% of popularity.
+            </p>
+
+            <p>
+                Two common split-quality measures are <b>Gini impurity</b> and <b>Entropy</b>. Both reward splits that
+                create purer child nodes, meaning each child node contains more of one class and less mixing. When using
+                entropy, the improvement from a split is often described as <b>Information Gain</b>, which equals parent
+                entropy minus the weighted child entropy after the split.
+            </p>
+
+            <p>
+                Small example: suppose a parent node has 60 class-0 movies and 40 class-1 movies, giving entropy about
+                <b>0.971</b>. After a split, the weighted child entropy drops to about <b>0.720</b>. The information gain
+                is therefore <b>0.251</b>, so that split is better than a split that barely changes the impurity. The
+                same logic applies with Gini: lower weighted impurity after the split means a better split.
+            </p>
+
+            <p>
+                It is generally possible to create an almost infinite number of trees because there are many choices at
+                every step: which feature to split on, where to place the threshold, how deep to grow, how many rows to
+                require in each leaf, what stopping rule to use, and whether to prune afterward. Even with the same
+                dataset, changing one of those design choices can produce a different tree.
+            </p>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/dt_overview_split_example.png" alt="Decision tree split example">
+                    <figcaption class="figcap">
+                        <b>Split concept.</b> A good split creates child nodes that are more pure than the parent.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/dt_impurity_example.png" alt="Decision tree impurity example">
+                    <figcaption class="figcap">
+                        <b>Impurity drop.</b> Both Gini and entropy decrease when the split separates the classes well.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(b) Data Prep</h2>
+
+            <p>
+                I used the same deduplicated TMDB dataset as in the NB section, again targeting
+                <code>label_popular_top25</code>. After removing duplicate movie IDs, the supervised modeling dataset had
+                <b>191 unique movies</b>. I kept numeric movie features and multi-label genre indicators because trees
+                can naturally handle mixed feature types.
+            </p>
+
+            <p>
+                The train/test split was the same stratified split used throughout Module 3: <b>143 training rows</b>
+                and <b>48 testing rows</b>. The training and testing sets must be disjoint so that the decision tree is
+                evaluated on unseen movies rather than memorized records. The split summary again reports <b>0 overlap</b>
+                in movie IDs across the two sets.
+            </p>
+
+            <ul>
+                <li><b>Prepared modeling data:</b> <a href="assets/data/module3/module3_modeling_dataset.csv" target="_blank">module3_modeling_dataset.csv</a></li>
+                <li><b>Split summary:</b> <a href="assets/data/module3/train_test_split_summary.json" target="_blank">train_test_split_summary.json</a></li>
+                <li><b>Training sample:</b> <a href="assets/data/module3/train_sample.csv" target="_blank">train_sample.csv</a></li>
+                <li><b>Testing sample:</b> <a href="assets/data/module3/test_sample.csv" target="_blank">test_sample.csv</a></li>
+            </ul>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/train_test_split.png" alt="Decision tree train test split">
+                    <figcaption class="figcap">
+                        <b>Disjoint split.</b> The train and test partitions are separated before any model fitting.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/test_preview.png" alt="Testing set preview">
+                    <figcaption class="figcap">
+                        <b>Testing set preview.</b> This sample represents the held-out data used for final evaluation.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(c) Code</h2>
+
+            <p>
+                The decision tree models were generated in Python inside the same Module 3 pipeline. I intentionally
+                produced three different trees with different root nodes by changing the split criterion, depth settings,
+                and the available feature set after earlier root features were removed.
+            </p>
+
+            <ul>
+                <li><b>Decision tree code:</b> <a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module3/07_supervised_tmdb.py" target="_blank" rel="noreferrer">07_supervised_tmdb.py</a></li>
+                <li><b>Decision tree metrics:</b> <a href="assets/data/module3/dt_model_metrics.csv" target="_blank">dt_model_metrics.csv</a></li>
+            </ul>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(d) Results</h2>
+
+            <p>
+                I created three different decision trees, and each one began with a different root node. Tree A used
+                <b>release_year</b> as the root and reached <b>0.7292 accuracy</b>. Tree B used <b>release_month</b> as
+                the root and reached <b>0.7708 accuracy</b>. Tree C used <b>vote_count</b> as the root and was the best
+                tree with <b>0.7917 accuracy</b>.
+            </p>
+
+            <div class="table-wrap" style="margin-top:12px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tree</th>
+                            <th>Criterion</th>
+                            <th>Max depth</th>
+                            <th>Root node</th>
+                            <th>Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tree A</td>
+                            <td>Gini</td>
+                            <td>4</td>
+                            <td>release_year</td>
+                            <td>0.7292</td>
+                        </tr>
+                        <tr>
+                            <td>Tree B</td>
+                            <td>Entropy</td>
+                            <td>4</td>
+                            <td>release_month</td>
+                            <td>0.7708</td>
+                        </tr>
+                        <tr>
+                            <td>Tree C</td>
+                            <td>Gini</td>
+                            <td>5</td>
+                            <td>vote_count</td>
+                            <td>0.7917</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="triple-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/decision_tree_1.png" alt="Decision tree A">
+                    <figcaption class="figcap">
+                        <b>Tree A.</b> Root node: <code>release_year</code>.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/decision_tree_2.png" alt="Decision tree B">
+                    <figcaption class="figcap">
+                        <b>Tree B.</b> Root node: <code>release_month</code>.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/decision_tree_3.png" alt="Decision tree C">
+                    <figcaption class="figcap">
+                        <b>Tree C.</b> Root node: <code>vote_count</code> and best overall accuracy.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/dt_confusion_matrix.png" alt="Decision tree confusion matrix">
+                    <figcaption class="figcap">
+                        <b>Best-tree confusion matrix.</b> For Tree C: TN=34, FP=2, FN=8, TP=4.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/dt_feature_importance.png" alt="Decision tree feature importance">
+                    <figcaption class="figcap">
+                        <b>Feature importance.</b> The best tree relied most heavily on the strongest available split
+                        features after the earlier root features were excluded.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(e) Conclusions</h2>
+
+            <p>
+                The decision tree results show that movie popularity in this dataset is strongly tied to simple,
+                interpretable split rules. Release timing mattered in two trees, while vote_count produced the strongest
+                root node in the best tree. For this project, decision trees were useful because they gave a competitive
+                accuracy score and also made the prediction logic easy to explain visually.
             </p>
         </div>
     </div>
 
     <div id="footer-slot"></div>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260402b"></script>
 </body>
 
 </html>

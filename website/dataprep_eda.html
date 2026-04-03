@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -88,21 +88,21 @@
                 <figure class="figure">
                     <img src="assets/images/popular_raw.png" alt="Raw popular CSV preview">
                     <figcaption class="figcap">
-                        <b>RAW (popular)</b> — Preview of <code>tmdb_popular_raw.csv</code>.
+                        <b>RAW (popular)</b> â€” Preview of <code>tmdb_popular_raw.csv</code>.
                     </figcaption>
                 </figure>
 
                 <figure class="figure">
                     <img src="assets/images/popular_enriched.png" alt="Raw enriched CSV preview">
                     <figcaption class="figcap">
-                        <b>RAW (enriched)</b> — Preview of <code>tmdb_enriched_raw.csv</code>.
+                        <b>RAW (enriched)</b> â€” Preview of <code>tmdb_enriched_raw.csv</code>.
                     </figcaption>
                 </figure>
 
                 <figure class="figure">
                     <img src="assets/images/clean.png" alt="Clean CSV preview">
                     <figcaption class="figcap">
-                        <b>CLEAN</b> — Preview of <code>tmdb_clean.csv</code>.
+                        <b>CLEAN</b> â€” Preview of <code>tmdb_clean.csv</code>.
                     </figcaption>
                 </figure>
             </div>
@@ -120,7 +120,7 @@
                 <li>Created labels:
                     <ul>
                         <li><code>label_popular_top25</code>: 1 if popularity in top 25% of the dataset.</li>
-                        <li><code>label_high_rating</code>: 1 if vote_average ≥ 7.0.</li>
+                        <li><code>label_high_rating</code>: 1 if vote_average â‰¥ 7.0.</li>
                     </ul>
                 </li>
             </ul>
@@ -144,8 +144,8 @@
             <figure class="figure">
                 <img src="assets/images/01_popularity_hist.png" alt="Popularity distribution">
                 <figcaption class="figcap">
-                    <b>Figure 1 — Popularity Distribution.</b> Popularity values are concentrated in a moderate range
-                    with a tail of very high popularity titles. This suggests that “success” by popularity may be skewed
+                    <b>Figure 1 â€” Popularity Distribution.</b> Popularity values are concentrated in a moderate range
+                    with a tail of very high popularity titles. This suggests that â€œsuccessâ€ by popularity may be skewed
                     and influenced by extreme cases.
                 </figcaption>
             </figure>
@@ -154,7 +154,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/02_rating_hist.png" alt="Rating distribution">
                 <figcaption class="figcap">
-                    <b>Figure 2 — Rating Distribution.</b> Ratings cluster around mid-to-high values, indicating many
+                    <b>Figure 2 â€” Rating Distribution.</b> Ratings cluster around mid-to-high values, indicating many
                     movies receive average-to-good audience reception. Extremely low or high ratings are less common.
                 </figcaption>
             </figure>
@@ -163,7 +163,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/03_vote_count_hist.png" alt="Vote count distribution">
                 <figcaption class="figcap">
-                    <b>Figure 3 — Vote Count Distribution.</b> Vote counts vary substantially. This matters because
+                    <b>Figure 3 â€” Vote Count Distribution.</b> Vote counts vary substantially. This matters because
                     ratings based on very few votes can be less stable than ratings based on larger audiences.
                 </figcaption>
             </figure>
@@ -172,7 +172,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/04_popularity_vs_rating.png" alt="Popularity vs rating">
                 <figcaption class="figcap">
-                    <b>Figure 4 — Popularity vs Rating.</b> The relationship appears weak-to-moderate, suggesting that
+                    <b>Figure 4 â€” Popularity vs Rating.</b> The relationship appears weak-to-moderate, suggesting that
                     highly popular films are not always the highest-rated. Popularity and ratings capture different
                     aspects of success.
                 </figcaption>
@@ -182,7 +182,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/05_runtime_hist.png" alt="Runtime distribution">
                 <figcaption class="figcap">
-                    <b>Figure 5 — Runtime Distribution.</b> Most films fall into a typical feature-length range.
+                    <b>Figure 5 â€” Runtime Distribution.</b> Most films fall into a typical feature-length range.
                     Runtime may influence audience engagement differently depending on genre and pacing.
                 </figcaption>
             </figure>
@@ -191,7 +191,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/06_budget_box.png" alt="Budget boxplot">
                 <figcaption class="figcap">
-                    <b>Figure 6 — Budget (Boxplot).</b> Budgets show strong skew and outliers. Capping extreme values
+                    <b>Figure 6 â€” Budget (Boxplot).</b> Budgets show strong skew and outliers. Capping extreme values
                     improves stability in plots and helps prevent a small number of movies from dominating summaries.
                 </figcaption>
             </figure>
@@ -200,7 +200,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/07_revenue_box.png" alt="Revenue boxplot">
                 <figcaption class="figcap">
-                    <b>Figure 7 — Revenue (Boxplot).</b> Revenue is highly skewed and dominated by a few very large
+                    <b>Figure 7 â€” Revenue (Boxplot).</b> Revenue is highly skewed and dominated by a few very large
                     values, supporting the use of robust statistics and potential transformations in later modeling.
                 </figcaption>
             </figure>
@@ -209,7 +209,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/08_popularity_by_month.png" alt="Popularity by month">
                 <figcaption class="figcap">
-                    <b>Figure 8 — Popularity by Release Month.</b> Average popularity varies by month, suggesting that
+                    <b>Figure 8 â€” Popularity by Release Month.</b> Average popularity varies by month, suggesting that
                     release timing may be associated with audience attention and visibility (seasonality effects).
                 </figcaption>
             </figure>
@@ -218,7 +218,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/09_label_popular_top25.png" alt="Top 25 percent popularity label distribution">
                 <figcaption class="figcap">
-                    <b>Figure 9 — Popularity Label (Top 25%).</b> This chart shows the distribution of the binary label
+                    <b>Figure 9 â€” Popularity Label (Top 25%).</b> This chart shows the distribution of the binary label
                     <code>label_popular_top25</code>, which will be used later for supervised learning tasks.
                 </figcaption>
             </figure>
@@ -227,7 +227,7 @@
             <figure class="figure" style="margin-top:12px;">
                 <img src="assets/images/10_top_genres.png" alt="Top genres">
                 <figcaption class="figcap">
-                    <b>Figure 10 — Most Common Genres.</b> The most frequent genres provide context for later modeling.
+                    <b>Figure 10 â€” Most Common Genres.</b> The most frequent genres provide context for later modeling.
                     Genre distributions also help interpret differences in popularity and ratings across movie
                     categories.
                 </figcaption>
@@ -238,7 +238,7 @@
     </div>
 
     <div id="footer-slot"></div>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260402b"></script>
 </body>
 
 </html>

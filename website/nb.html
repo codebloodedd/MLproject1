@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Clustering | TMDB Movie Success</title>
+    <title>Naive Bayes | TMDB Movie Success</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,23 +13,254 @@
 
     <div class="container">
         <div class="hero">
-            <span class="badge">Module 2</span>
-            <h1>Clustering</h1>
-            <div class="small">Work in progress — this section will be completed in later modules.</div>
+            <span class="badge">Module 3</span>
+            <span class="badge">Supervised Learning</span>
+            <span class="badge">3 Naive Bayes Models</span>
+            <h1>Naive Bayes</h1>
+            <div class="small">
+                For Module 3, I used the TMDB movie dataset to classify whether a movie belongs to the top 25% of
+                popularity. This section compares Multinomial, Gaussian, and Bernoulli Naive Bayes on that same target.
+            </div>
         </div>
 
         <div class="card" style="margin-top:16px;">
-            <h2>Status</h2>
+            <h2>(a) Overview</h2>
+
             <p>
-                Work in progress. This tab will include an overview of clustering, the prepared dataset used, a link to
-                the code,
-                visualized cluster results, and interpretation of what the clusters represent for movie success.
+                Naive Bayes (NB) is a probabilistic classifier that estimates the probability of each class and then
+                predicts the class with the highest posterior probability. The word <i>naive</i> refers to its core
+                assumption that features are conditionally independent given the class. That assumption is often not
+                perfectly true in real data, but NB is still widely used because it is fast, interpretable, and works
+                well on many small and medium-sized datasets.
+            </p>
+
+            <p>
+                In general, NB is used when we want a simple baseline classifier, quick training time, and a model that
+                handles many features efficiently. It is especially common in text classification, spam filtering, and
+                categorical prediction tasks. For this project, NB is useful because the movie dataset mixes genre
+                information with numeric and indicator-style variables, so we can compare how different NB flavors react
+                to different feature formats.
+            </p>
+
+            <div class="table-wrap" style="margin-top:12px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Variant</th>
+                            <th>Best data type</th>
+                            <th>How it behaves</th>
+                            <th>When I would use it</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Multinomial NB</td>
+                            <td>Non-negative counts or frequencies</td>
+                            <td>Works well when each column acts like a count contribution to the class.</td>
+                            <td>Text counts, bag-of-words, or non-negative engineered feature totals.</td>
+                        </tr>
+                        <tr>
+                            <td>Gaussian NB</td>
+                            <td>Continuous numeric features</td>
+                            <td>Assumes each feature is approximately Gaussian inside each class.</td>
+                            <td>Continuous measurements such as runtime, revenue, or scaled numeric attributes.</td>
+                        </tr>
+                        <tr>
+                            <td>Bernoulli NB</td>
+                            <td>Binary 0/1 indicators</td>
+                            <td>Focuses on whether a feature is present or absent.</td>
+                            <td>Keyword presence, yes/no indicators, one-hot style feature sets.</td>
+                        </tr>
+                        <tr>
+                            <td>Categorical NB</td>
+                            <td>Discrete category codes</td>
+                            <td>Treats each feature as belonging to one of several unordered categories.</td>
+                            <td>Ordinally encoded categories such as low/medium/high bins or grouped labels.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout">
+                <b>Compare and contrast:</b> Multinomial NB expects non-negative count-like values, Gaussian NB is for
+                continuous measurements, Bernoulli NB is for binary indicators, and Categorical NB is for discrete
+                category codes. The model family is the same, but the required input format changes based on the flavor.
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(b) Data Prep</h2>
+
+            <p>
+                Supervised learning requires labeled data, so I used <code>label_popular_top25</code> as the target: 1
+                means the movie is in the top 25% of popularity and 0 means it is not. Before splitting the data, I
+                removed duplicate movie IDs so the same movie would not leak into both train and test sets. That step
+                reduced the dataset from <b>218 rows</b> to <b>191 unique movies</b>.
+            </p>
+
+            <p>
+                I then created one stratified train/test split with <b>143 training rows</b> and <b>48 testing rows</b>.
+                The sets must be disjoint because the model should be evaluated on movies it did not train on; otherwise,
+                the measured accuracy would be artificially optimistic. The split summary confirms <b>0 overlapping movie
+                IDs</b> between train and test.
+            </p>
+
+            <div class="stats-grid" style="margin-top:14px;">
+                <div class="stat">
+                    <div class="stat-label">Rows after deduplication</div>
+                    <div class="stat-value">191</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Duplicates removed</div>
+                    <div class="stat-value">27</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Training rows</div>
+                    <div class="stat-value">143</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Testing rows</div>
+                    <div class="stat-value">48</div>
+                </div>
+            </div>
+
+            <ul>
+                <li><b>Modeling dataset:</b> <a href="assets/data/module3/module3_modeling_dataset.csv" target="_blank">module3_modeling_dataset.csv</a></li>
+                <li><b>Train/test split summary:</b> <a href="assets/data/module3/train_test_split_summary.json" target="_blank">train_test_split_summary.json</a></li>
+                <li><b>Training sample:</b> <a href="assets/data/module3/train_sample.csv" target="_blank">train_sample.csv</a></li>
+                <li><b>Testing sample:</b> <a href="assets/data/module3/test_sample.csv" target="_blank">test_sample.csv</a></li>
+            </ul>
+
+            <p>
+                Different NB flavors need different input frames, so I prepared three transparent versions of the same
+                training data. Multinomial NB used non-negative numeric features plus genre token counts, Gaussian NB
+                used standardized continuous numeric features plus genre indicators, and Bernoulli NB used binary flags
+                such as high/low budget, high/low vote count, summer release, and genre presence.
+            </p>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/train_test_split.png" alt="Train test split overview">
+                    <figcaption class="figcap">
+                        <b>Train/test split.</b> The same stratified split is reused across all NB models so the
+                        comparison stays fair.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/train_preview.png" alt="Training set preview">
+                    <figcaption class="figcap">
+                        <b>Training set preview.</b> This is a sample of the disjoint training dataframe used to fit the
+                        models.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div class="triple-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/multinomial_nb_preview.png" alt="Multinomial Naive Bayes dataframe preview">
+                    <figcaption class="figcap">
+                        <b>Multinomial NB frame.</b> Non-negative engineered features fit the count-like requirement.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/gaussian_nb_preview.png" alt="Gaussian Naive Bayes dataframe preview">
+                    <figcaption class="figcap">
+                        <b>Gaussian NB frame.</b> Standardized continuous values are appropriate for Gaussian NB.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/bernoulli_nb_preview.png" alt="Bernoulli Naive Bayes dataframe preview">
+                    <figcaption class="figcap">
+                        <b>Bernoulli NB frame.</b> All columns are binary 0/1 indicators.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(c) Code</h2>
+
+            <p>
+                All three NB pipelines were coded in Python in the same Module 3 script so the same cleaned data,
+                duplicate removal, target label, and train/test split were used consistently.
+            </p>
+
+            <ul>
+                <li><b>Module 3 code:</b> <a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module3/07_supervised_tmdb.py" target="_blank" rel="noreferrer">07_supervised_tmdb.py</a></li>
+                <li><b>NB metrics table:</b> <a href="assets/data/module3/nb_model_metrics.csv" target="_blank">nb_model_metrics.csv</a></li>
+            </ul>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(d) Results</h2>
+
+            <p>
+                The three Naive Bayes models produced clearly different behaviors on the same test set. Bernoulli NB was
+                the strongest performer with <b>0.7917 accuracy</b>, Multinomial NB reached <b>0.7292</b>, and Gaussian
+                NB dropped to <b>0.3125</b>. That result makes sense because the binary indicator representation aligned
+                better with the movie success target than the Gaussian assumption did.
+            </p>
+
+            <div class="stats-grid" style="margin-top:14px;">
+                <div class="stat">
+                    <div class="stat-label">Best NB model</div>
+                    <div class="stat-value">Bernoulli</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Best NB accuracy</div>
+                    <div class="stat-value">0.7917</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Multinomial accuracy</div>
+                    <div class="stat-value">0.7292</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Gaussian accuracy</div>
+                    <div class="stat-value">0.3125</div>
+                </div>
+            </div>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module3/nb_confusion_matrices.png" alt="Naive Bayes confusion matrices">
+                    <figcaption class="figcap">
+                        <b>Confusion matrices.</b> Bernoulli NB has the most balanced error pattern here, while Gaussian
+                        NB over-predicts the positive class heavily.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module3/nb_accuracy_comparison.png" alt="Naive Bayes accuracy comparison">
+                    <figcaption class="figcap">
+                        <b>Accuracy comparison.</b> Bernoulli NB is the strongest NB flavor on this movie dataset.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <p class="mini-note" style="margin-top:12px;">
+                Bernoulli NB confusion matrix: TN=34, FP=2, FN=8, TP=4. Multinomial NB confusion matrix: TN=33, FP=3,
+                FN=10, TP=2. Gaussian NB confusion matrix: TN=3, FP=33, FN=0, TP=12.
+            </p>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(e) Conclusions</h2>
+
+            <p>
+                For this topic, Naive Bayes suggests that movie popularity is easier to classify when the input is
+                expressed as presence/absence signals rather than only as continuous measurements. Genre membership,
+                high-vs-low financial indicators, and release timing signals carried more useful classification
+                information than the Gaussian assumptions captured. I also learned that the choice of NB flavor matters
+                a great deal because the wrong feature format can sharply reduce performance.
             </p>
         </div>
     </div>
 
     <div id="footer-slot"></div>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260402b"></script>
 </body>
 
 </html>

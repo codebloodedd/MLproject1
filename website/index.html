@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -15,15 +15,14 @@
     <div class="container">
 
         <div class="hero">
-            <span class="badge">Module 1 — Part 1</span>
-            <span class="badge">TMDB API</span>
-            <span class="badge">PG-13 topic</span>
-            <h1>What makes a movie “successful”?</h1>
+            <span class="badge">Modules 1-3</span>
+            <span class="badge">TMDB Movies</span>
+            <span class="badge">Movie Success Theme</span>
+            <h1>What makes a movie successful?</h1>
 
             <div class="small">
-                This project explores how movie attributes (genre, runtime, budget, revenue, release timing, and
-                audience engagement)
-                relate to two common notions of success: popularity and ratings.
+                This website follows the same movie-success topic across each module, moving from data collection and
+                exploration into deeper pattern finding and supervised prediction.
             </div>
         </div>
 
@@ -34,17 +33,50 @@
                 <h2>Topic Background</h2>
 
                 <p>
-                    Movies are more than entertainment; they are cultural products influenced by creative decisions,
-                    marketing, distribution strategy, and audience preferences. A film’s “success” can be measured in
-                    multiple ways. Some films become widely known and discussed (high popularity), while others earn
-                    strong audience approval (high ratings).
+                    Movies are more than entertainment. They are cultural events shaped by storytelling, star power,
+                    marketing, release timing, and audience attention. A movie can feel successful because people talk
+                    about it everywhere, because viewers rate it highly, or because it remains visible long after its
+                    release.
                 </p>
 
                 <p>
-                    This project uses movie metadata from The Movie Database (TMDB) to explore patterns linking movie
-                    attributes such as genre, runtime, budget, revenue, and release timing to measures of audience
-                    engagement including popularity scores and ratings.
+                    This project focuses on how movie characteristics connect to different kinds of success. Genre,
+                    release season, runtime, and financial scale can all affect the way a movie reaches audiences and
+                    how strongly those audiences respond. Looking at these patterns helps explain why some titles become
+                    highly visible while others earn quieter but stronger approval.
                 </p>
+
+                <p>
+                    The topic also matters because movie success is not one simple idea. A film can be widely seen but
+                    only moderately liked, or it can be deeply appreciated without becoming a major mainstream hit.
+                    Exploring both attention and reception gives a fuller picture of what success looks like in the
+                    movie industry.
+                </p>
+
+                <p>
+                    By studying these trends, this project aims to connect everyday movie questions to real data. The
+                    goal is to better understand what kinds of movies attract attention, what kinds tend to earn strong
+                    audience reactions, and how those patterns can support smarter decisions about content, release
+                    strategy, and audience expectations.
+                </p>
+
+                <div class="dual-grid" style="margin-top:16px;">
+                    <figure class="figure">
+                        <img src="assets/images/08_popularity_by_month.png" alt="Popularity by release month">
+                        <figcaption class="figcap">
+                            <b>Release timing matters.</b> Audience attention is not evenly distributed across the
+                            calendar, which makes release season an important part of the topic.
+                        </figcaption>
+                    </figure>
+
+                    <figure class="figure">
+                        <img src="assets/images/10_top_genres.png" alt="Top movie genres">
+                        <figcaption class="figcap">
+                            <b>Movie types matter too.</b> Genre mix helps set audience expectations and can influence
+                            which movies become widely discussed.
+                        </figcaption>
+                    </figure>
+                </div>
 
                 <h2>Questions to Answer</h2>
 
@@ -63,54 +95,58 @@
 
             </div>
 
-
             <div class="card">
 
                 <h2>Project Repository</h2>
 
                 <p>
-                    All datasets, scripts, and outputs used in this project are available in the public GitHub
+                    All datasets, scripts, and outputs used in this project are stored in the project GitHub
                     repository.
                 </p>
 
                 <ul>
-
                     <li>
                         <b>GitHub repository:</b><br>
-                        <a href="https://github.com/codebloodedd/MLproject1" target="_blank">
+                        <a href="https://github.com/codebloodedd/MLproject1" target="_blank" rel="noreferrer">
                             https://github.com/codebloodedd/MLproject1
                         </a>
                     </li>
 
                     <li>
-                        <b>Data collection + cleaning scripts:</b>
+                        <b>Core scripts:</b>
                         <ul>
-                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module2/01_collect_tmdb.py"
-                                    target="_blank">01_collect_tmdb.py</a></li>
-                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module2/02_clean_tmdb.py"
-                                    target="_blank">02_clean_tmdb.py</a></li>
-                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module2/03_eda_tmdb.py"
-                                    target="_blank">03_eda_tmdb.py</a></li>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/01_collect_tmdb.py"
+                                    target="_blank" rel="noreferrer">01_collect_tmdb.py</a></li>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/02_clean_tmdb.py"
+                                    target="_blank" rel="noreferrer">02_clean_tmdb.py</a></li>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/03_eda_tmdb.py"
+                                    target="_blank" rel="noreferrer">03_eda_tmdb.py</a></li>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module3/07_supervised_tmdb.py"
+                                    target="_blank" rel="noreferrer">07_supervised_tmdb.py</a></li>
                         </ul>
                     </li>
 
                     <li>
                         <b>Clean dataset used throughout the project:</b><br>
                         <a href="https://github.com/codebloodedd/MLproject1/blob/main/data_clean/tmdb_clean.csv"
-                            target="_blank">
+                            target="_blank" rel="noreferrer">
                             tmdb_clean.csv
                         </a>
                     </li>
-
                 </ul>
 
                 <h3>Project structure</h3>
 
                 <ul>
-                    <li>Module 1: data collection, cleaning, and exploratory analysis</li>
+                    <li>Module 1: API collection, cleaning, and exploratory analysis</li>
                     <li>Module 2: PCA, clustering, and association rule mining</li>
-                    <li>Later modules: supervised models predicting success labels</li>
+                    <li>Module 3: Naive Bayes, decision trees, and regression-based classification</li>
                 </ul>
+
+                <div class="callout">
+                    <b>Current focus:</b> Module 3 uses labeled movie data to predict whether a movie falls into the
+                    top 25% of popularity.
+                </div>
 
             </div>
 
@@ -119,7 +155,7 @@
     </div>
 
     <div id="footer-slot"></div>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260402b"></script>
 
 </body>
 

@@ -276,3 +276,96 @@ table.table th {
 table.table tr:hover td {
     background: rgba(255, 255, 255, 0.02);
 }
+
+.section-grid,
+.dual-grid,
+.triple-grid,
+.stats-grid,
+.qa-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.dual-grid {
+    grid-template-columns: 1fr;
+}
+
+.triple-grid,
+.stats-grid,
+.qa-grid {
+    grid-template-columns: 1fr;
+}
+
+@media(min-width: 860px) {
+    .dual-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .triple-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .qa-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.stat {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.codebox,
+.mini-note {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+}
+
+.codebox {
+    font-family: Consolas, Monaco, monospace;
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+.mini-note {
+    color: var(--muted);
+}
+
+.qa {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.qa h3 {
+    margin-top: 0;
+}
+
+.comparison-list {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.comparison-list li+li {
+    margin-top: 8px;
+}
