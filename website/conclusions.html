@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -9,49 +9,93 @@
 </head>
 
 <body>
-    <div class="nav">
-        <div class="nav-inner">
-            <a class="brand" href="index.html">TMDB Movie Success Project</a>
-            <div class="tabs">
-                <a href="index.html">Introduction</a>
-                <a href="dataprep_eda.html">Data Prep/EDA</a>
-                <a href="pca.html">PCA</a>
-                <a href="clustering.html">Clustering</a>
-                <a href="arm.html">ARM</a>
-                <a href="dt.html">DT</a>
-                <a href="nb.html">NB</a>
-                <a href="svm.html">SVM</a>
-                <a href="regression.html">Regression</a>
-                <a class="active" href="conclusions.html">Conclusions</a>
-            </div>
-        </div>
-    </div>
+    <div id="nav-slot"></div>
 
     <div class="container">
         <div class="hero">
-            <span class="badge">Module 1</span>
-            <h1>Conclusions (Early)</h1>
-            <div class="small">This section will expand in the final submission with non-technical conclusions and
-                supporting images.</div>
+            <span class="badge">Final Conclusions</span>
+            <span class="badge">Non-Technical Summary</span>
+            <span class="badge">Take-Home Messages</span>
+            <h1>What this project shows about movie success</h1>
+            <div class="small">
+                This final section tells the end of the story in plain language and focuses on the biggest practical
+                ideas that emerged across the full project.
+            </div>
         </div>
 
         <div class="card" style="margin-top:16px;">
+            <h2>Final Takeaways</h2>
+
             <p>
-                Early exploration suggests that popularity and ratings represent different types of success.
-                Some movies achieve high visibility and engagement while not necessarily achieving the highest ratings.
-                In contrast, other movies earn strong ratings but may not appear among the most visible titles.
+                The clearest message from this project is that movie success is not one simple outcome. Some movies earn
+                attention because they are highly visible, widely promoted, or released at the right moment, while
+                other movies earn stronger approval without becoming the biggest public event. Looking at both sides of
+                that story made the project much more useful than if it had focused on only one measure.
             </p>
+
             <p>
-                The distributions of revenue and budget appear highly skewed, meaning a small number of movies dominate
-                financial signals.
-                This suggests that future analyses should use careful comparisons across groups and avoid relying only
-                on simple averages.
-                As later modules add additional modeling methods, these patterns will be explored more thoroughly to
-                support clearer
-                takeaways about what factors tend to align with different success outcomes.
+                Release timing mattered throughout the project. Movies did not attract attention evenly across the year,
+                and that helped explain why visibility patterns were tied to more than just quality or genre. The work
+                also showed that certain movie types and release profiles appear together again and again, which means
+                success often comes from recurring combinations rather than one isolated feature.
+            </p>
+
+            <p>
+                Financial scale also stood out. Bigger budgets often traveled with bigger revenue, and smaller budgets
+                often stayed with smaller revenue, which is a strong reminder that movie outcomes are shaped by both the
+                content itself and the size of the machine around it. At the same time, money alone was not enough to
+                explain everything, because visibility and audience approval still separated in important ways.
+            </p>
+
+            <p>
+                When the project moved from description into prediction, it became clear that some kinds of movie
+                success are easier to recognize than others. The strongest prediction story was not simply about picking
+                one model winner. Instead, it showed that attention-driven success is harder to pin down cleanly, while
+                audience approval follows a more stable pattern in the movie features that were available here. That is
+                one of the biggest practical lessons from the entire website.
+            </p>
+
+            <p>
+                In the end, the project suggests that successful movies tend to leave clues in their timing, scale,
+                genre mix, and audience engagement signals, but those clues do not all point in the same direction.
+                Some help explain who becomes highly visible. Others help explain who is better liked. The best overall
+                takeaway is that movie success should be treated as a layered story, not a single score.
+            </p>
+
+            <div class="dual-grid" style="margin-top:16px;">
+                <figure class="figure">
+                    <img src="assets/images/04_popularity_vs_rating.png" alt="Popularity versus rating">
+                    <figcaption class="figcap">
+                        <b>Two forms of success.</b> The project repeatedly showed that visibility and audience approval
+                        overlap only partly, which is why both had to be considered.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/secondary_target_contrast.png" alt="Contrast between popularity and rating predictions">
+                    <figcaption class="figcap">
+                        <b>Different outcomes behave differently.</b> The final comparisons reinforced that approval was
+                        easier to recognize than broad popularity in this dataset.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>Project Close</h2>
+
+            <p>
+                Across the full website, the project moved from basic movie exploration, to natural groupings, to
+                recurring combinations, and finally to prediction. Each stage added a different kind of evidence, and
+                together they created a much clearer picture of what "movie success" actually looks like. Rather than
+                ending with one narrow answer, the project ends with a stronger understanding of the many ways movies
+                succeed and why those patterns matter.
             </p>
         </div>
     </div>
+
+    <div id="footer-slot"></div>
+    <script src="app.js?v=20260423a"></script>
 </body>
 
 </html>

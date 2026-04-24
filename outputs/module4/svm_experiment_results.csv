@@ -1,0 +1,16 @@
+target,kernel,C,accuracy,tn,fp,fn,tp
+label_popular_top25,linear,0.01,0.6875,23,13,2,10
+label_popular_top25,linear,0.1,0.7083,24,12,2,10
+label_popular_top25,linear,1.0,0.6875,24,12,3,9
+label_popular_top25,linear,10.0,0.7083,25,11,3,9
+label_popular_top25,linear,100.0,0.6875,24,12,3,9
+label_popular_top25,poly,0.01,0.25,0,36,0,12
+label_popular_top25,poly,0.1,0.6875,23,13,2,10
+label_popular_top25,poly,1.0,0.7083,26,10,4,8
+label_popular_top25,poly,10.0,0.6667,27,9,7,5
+label_popular_top25,poly,100.0,0.7083,28,8,6,6
+label_popular_top25,rbf,0.01,0.25,0,36,0,12
+label_popular_top25,rbf,0.1,0.25,0,36,0,12
+label_popular_top25,rbf,1.0,0.75,27,9,3,9
+label_popular_top25,rbf,10.0,0.7083,30,6,8,4
+label_popular_top25,rbf,100.0,0.6458,28,8,9,3

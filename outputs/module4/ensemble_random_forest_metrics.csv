@@ -1,0 +1,2 @@
+model,accuracy,tn,fp,fn,tp
+Random Forest,0.75,32,4,8,4

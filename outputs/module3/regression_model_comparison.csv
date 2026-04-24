@@ -1,0 +1,4 @@
+model,accuracy
+Decision Tree,0.7917
+Logistic Regression,0.7292
+Multinomial NB,0.7292

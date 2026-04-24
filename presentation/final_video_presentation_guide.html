@@ -1,0 +1,313 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>What Makes a Movie Successful?</title>
+  <style>
+    :root {
+      --bg: #07101c;
+      --bg2: #0b1628;
+      --panel: #101b31;
+      --panel-soft: rgba(255,255,255,0.03);
+      --text: #eef3ff;
+      --muted: #b9c7ea;
+      --line: rgba(255,255,255,0.10);
+      --mint: #64e4ca;
+      --blue: #83a8ff;
+      --gold: #ffce61;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(100,228,202,0.10), transparent 28%),
+        radial-gradient(circle at top left, rgba(131,168,255,0.10), transparent 24%),
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .page { max-width: 1200px; margin: 0 auto; padding: 28px 22px 70px; }
+    .hero {
+      background: linear-gradient(135deg, rgba(131,168,255,0.18), rgba(100,228,202,0.10));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 34px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -30px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      filter: blur(8px);
+    }
+    .eyebrow { color: var(--mint); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-size: 13px; }
+    h1 { margin: 10px 0 10px; font-size: 54px; line-height: 1.04; max-width: 850px; }
+    .subtitle { color: var(--muted); font-size: 20px; max-width: 860px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; margin-top: 22px; }
+    .mini-panel, .block, .visual, .pull {
+      background: rgba(7, 13, 25, 0.50);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+    .mini-panel h3, .block h3, .visual h3, .key h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: var(--mint);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      background: rgba(255,255,255,0.03);
+    }
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; }
+    .flow-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 110px;
+    }
+    .flow-step { color: var(--mint); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+    .flow-title { margin-top: 10px; font-size: 22px; font-weight: 800; }
+    .flow-copy { margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.35; }
+    .section {
+      margin-top: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 8px;
+      background: linear-gradient(180deg, var(--mint), var(--blue));
+    }
+    .section-head { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .num {
+      width: 58px; height: 58px; border-radius: 18px;
+      background: linear-gradient(145deg, rgba(100,228,202,0.18), rgba(131,168,255,0.20));
+      border: 1px solid var(--line); display: flex; align-items: center; justify-content: center;
+      color: var(--text); font-size: 24px; font-weight: 900; flex: none;
+    }
+    .section h2 { margin: 0; font-size: 34px; line-height: 1.1; }
+    .section-sub { color: var(--muted); margin-top: 4px; font-size: 17px; }
+    .two-col { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 22px; align-items: start; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px; }
+    .visual img { width: 100%; display: block; border-radius: 14px; background: white; }
+    .cap { margin-top: 10px; color: var(--muted); font-size: 14px; }
+    .key {
+      background: rgba(100,228,202,0.08);
+      border: 1px solid rgba(100,228,202,0.18);
+      border-radius: 18px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+    ul { margin: 10px 0 0; padding-left: 24px; }
+    li + li { margin-top: 8px; }
+    .quote { font-size: 22px; line-height: 1.35; color: var(--text); margin: 0; }
+    .quote-box {
+      background: linear-gradient(145deg, rgba(131,168,255,0.10), rgba(100,228,202,0.08));
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      margin-top: 16px;
+    }
+    .footer-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 14px; }
+    @media (max-width: 900px) {
+      .hero-grid, .two-col, .three-col, .flow { grid-template-columns: 1fr; }
+      h1 { font-size: 40px; }
+      .section h2 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="eyebrow">Machine Learning Final Project</div>
+      <h1>What Makes a Movie Successful?</h1>
+      <div class="subtitle">An exploration of popularity, audience response, movie profiles, and predictive patterns using data from The Movie Database.</div>
+
+      <div class="hero-grid">
+        <div class="mini-panel">
+          <h3>Core Question</h3>
+          <p>Why do some movies become highly visible while others earn strong approval without the same level of attention?</p>
+          <div class="chips">
+            <span class="chip">Popularity</span>
+            <span class="chip">Ratings</span>
+            <span class="chip">Genres</span>
+            <span class="chip">Release timing</span>
+          </div>
+        </div>
+        <div class="mini-panel">
+          <h3>Main Takeaway</h3>
+          <p>The strongest patterns in this project show that attention, timing, scale, and audience response all matter, but they do not influence success in the same way.</p>
+        </div>
+      </div>
+
+      <div class="flow">
+        <div class="flow-card"><div class="flow-step">Part 1</div><div class="flow-title">Topic</div><div class="flow-copy">What movie success means and why it matters.</div></div>
+        <div class="flow-card"><div class="flow-step">Part 2</div><div class="flow-title">Goals</div><div class="flow-copy">What the project tried to predict and discover.</div></div>
+        <div class="flow-card"><div class="flow-step">Part 3</div><div class="flow-title">Results</div><div class="flow-copy">What the data patterns and models actually found.</div></div>
+        <div class="flow-card"><div class="flow-step">Part 4</div><div class="flow-title">Meaning</div><div class="flow-copy">What those results imply in practical terms.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">1</div><div><h2>Movie Success Is More Than One Thing</h2><div class="section-sub">A movie can succeed through visibility, approval, or both.</div></div></div>
+      <div class="two-col">
+        <div>
+          <div class="block">
+            <p>Movie success is more complicated than just asking whether a movie is good or bad. A movie can be successful because many people are talking about it, because audiences rate it highly, or because it combines both attention and approval.</p>
+            <p>Looking at popularity and ratings together gives a fuller picture of how movies perform in the real world.</p>
+          </div>
+          <div class="quote-box"><p class="quote">A movie can be popular without being the highest-rated, and highly rated without being the most visible.</p></div>
+        </div>
+        <div class="visual"><h3>Popularity vs Rating</h3><img src="../website/assets/images/04_popularity_vs_rating.png" alt="Popularity versus rating" /><div class="cap">Popularity and ratings are connected, but they are not identical measures of success.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">2</div><div><h2>Why This Topic Matters</h2><div class="section-sub">Movies are creative products, but they are also market products.</div></div></div>
+      <div class="three-col">
+        <div class="pull"><strong>Visibility</strong><br>How much public attention a movie receives.</div>
+        <div class="pull"><strong>Approval</strong><br>How strongly viewers respond through ratings and votes.</div>
+        <div class="pull"><strong>Context</strong><br>How timing, genre, and scale shape those outcomes.</div>
+      </div>
+      <div class="block" style="margin-top:16px;"><p>Movies are influenced by genre, release timing, audience expectations, marketing, and financial scale. This project studies several signals together so that the final picture is more realistic and more useful.</p></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">3</div><div><h2>Project Goals</h2><div class="section-sub">The project focused on prediction, discovery, and explanation.</div></div></div>
+      <div class="two-col">
+        <div>
+          <div class="block"><ul><li>Predict whether a movie belongs to the top 25 percent of popularity.</li><li>Discover patterns connecting genres, timing, budget, revenue, runtime, and audience response.</li><li>Explain those findings in a way that is useful beyond a technical audience.</li></ul></div>
+          <div class="key"><h3>Why It Matters</h3><p>This kind of information can help marketers, content planners, streaming platforms, and recommendation systems better understand how movie traits connect to audience attention.</p></div>
+        </div>
+        <div class="visual"><h3>Project Focus</h3><img src="slide_images/slide_03.png" alt="Goals visual" /><div class="cap">The project centered on predicting, discovering, and explaining.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">4</div><div><h2>Data Source</h2><div class="section-sub">The project used movie data from The Movie Database.</div></div></div>
+      <div class="two-col">
+        <div><div class="block"><p>The data came from TMDB. The raw movie records included titles, release dates, popularity, vote averages, vote counts, and IDs. These records were then enriched with details such as runtime, revenue, budget, and genres.</p><p>The final dataset gave a consistent foundation for visual analysis, pattern discovery, and supervised prediction.</p></div></div>
+        <div class="visual"><h3>Clean Dataset Preview</h3><img src="../website/assets/images/clean.png" alt="Clean dataset preview" /><div class="cap">A cleaned version of the movie data supported the rest of the analysis.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">5</div><div><h2>First Major Finding</h2><div class="section-sub">Popularity and ratings do not move together perfectly.</div></div></div>
+      <div class="two-col">
+        <div>
+          <div class="block"><p>One of the clearest early findings was that popularity and ratings do not tell the same story. Some movies receive high attention without being the highest-rated, while some highly rated movies are less visible.</p><p>This shows that success should not be measured in only one way. A movie can succeed through public visibility, through stronger audience approval, or through a mix of both.</p></div>
+          <div class="key"><h3>Interpretation</h3><p>Attention and approval are related, but they are not interchangeable.</p></div>
+        </div>
+        <div class="visual"><h3>Rating Distribution</h3><img src="../website/assets/images/02_rating_hist.png" alt="Rating distribution chart" /><div class="cap">The ratings cluster in a mid-to-high range, which helps explain why ratings alone are not enough to describe visibility.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">6</div><div><h2>Movie Profiles with PCA and Clustering</h2><div class="section-sub">The dataset contains broad movie profiles that can be summarized visually.</div></div></div>
+      <div class="two-col">
+        <div>
+          <div class="block"><p>PCA and clustering helped reduce the complexity of the dataset and organize movies into broader profiles. Two components retained 67.4 percent of the variation, and three components retained 82.22 percent.</p><p>This means the movie dataset has meaningful structure even before prediction models are applied. The movies do not behave like random points; they form broader numeric profiles.</p></div>
+          <div class="three-col"><div class="pull"><strong>2D PCA</strong><br>67.40%</div><div class="pull"><strong>3D PCA</strong><br>82.22%</div><div class="pull"><strong>95% Variance</strong><br>5 components</div></div>
+        </div>
+        <div class="visual"><h3>PCA View</h3><img src="../website/assets/images/pca_2d.png" alt="PCA 2D chart" /><div class="cap">Reduced dimensions make broad movie patterns easier to see.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">7</div><div><h2>Association Rules: What Patterns Repeated?</h2><div class="section-sub">The strongest rules showed which movie traits consistently appeared together.</div></div></div>
+      <div class="two-col">
+        <div>
+          <div class="block">
+            <p>The support results showed several repeated patterns. Movies outside the top-popularity group were often non-summer releases, with support around 0.60. Lower-rated movies were also strongly associated with non-summer release timing.</p>
+            <p>The clearest financial pattern was that high-budget movies frequently matched high-revenue movies, with confidence about 0.88 and lift about 1.73. Low-budget movies similarly matched low-revenue movies, with confidence about 0.86 and lift about 1.76.</p>
+            <p>Another pattern was that low-budget movies were more likely to fall outside the top-popularity group. That suggests scale and visibility were connected, but not in a simple one-direction way.</p>
+          </div>
+          <div class="key"><h3>What This Means</h3><p>The rule mining results suggest that release timing, budget level, and revenue level were some of the most consistent combinations in the dataset, especially among movies that were not in the most popular group.</p></div>
+        </div>
+        <div class="visual"><h3>Rule Network</h3><img src="../website/assets/images/arm_network_top15_lift.png" alt="ARM network visualization" /><div class="cap">The strongest associations clustered around budget, revenue, rating level, release timing, and long-runtime adventure or action combinations.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">8</div><div><h2>What the Classifiers Actually Learned</h2><div class="section-sub">The models were predicting whether a movie belonged to the top 25 percent of popularity.</div></div></div>
+      <div class="two-col">
+        <div>
+          <div class="block">
+            <p>The best Naive Bayes model was Bernoulli Naive Bayes, with accuracy 0.7917. That is an important result because Bernoulli Naive Bayes uses simple yes-or-no features. In other words, the model worked best when movies were described by presence or absence signals such as budget group, revenue group, release timing group, and genre membership.</p>
+            <p>That suggests the top-popularity label in this dataset was better explained by broad category-style signals than by assuming smooth continuous numeric patterns. Gaussian Naive Bayes performed badly, with accuracy 0.3125, which means the continuous Gaussian assumption was not a good fit here.</p>
+            <p>So the key result is not just that one model was more accurate. The key result is that popularity was easier to separate when movies were represented as high versus low style indicators.</p>
+          </div>
+        </div>
+        <div class="visual"><h3>Naive Bayes Comparison</h3><img src="../website/assets/images/module3/nb_accuracy_comparison.png" alt="Naive Bayes comparison" /><div class="cap">Bernoulli Naive Bayes was strongest, which means binary presence/absence style signals carried the most useful information.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">9</div><div><h2>Decision Tree and Logistic Regression Results</h2><div class="section-sub">The final models reveal which features were most useful for separating top-popularity movies.</div></div></div>
+      <div class="two-col">
+        <div>
+          <div class="block">
+            <p>The best Decision Tree reached 0.7917 accuracy and its root split was <strong>vote_count</strong>. That means audience engagement was the single most useful first split for separating top-popularity movies from the rest. The other trees also used <strong>release_year</strong> and <strong>release_month</strong> as root nodes, which shows that timing signals were also important.</p>
+            <p>Logistic regression reached 0.7292 accuracy. Its strongest positive coefficients were release_year, budget, Adventure, Drama, Crime, Action, and vote_average. In practical terms, that means newer releases, larger budgets, and certain genres were associated with a higher chance of landing in the top-popularity class.</p>
+            <p>Interestingly, vote_count had a negative logistic coefficient in this snapshot. That suggests current popularity is not the same thing as total accumulated audience voting, which is a useful reminder that visibility can be short-term and dynamic.</p>
+          </div>
+          <div class="three-col"><div class="pull"><strong>Best Tree</strong><br>0.7917</div><div class="pull"><strong>Tree root</strong><br>vote_count</div><div class="pull"><strong>Key logistic signal</strong><br>newer release year</div></div>
+        </div>
+        <div class="visual"><h3>Model Comparison</h3><img src="../website/assets/images/module3/regression_accuracy_comparison.png" alt="Final model comparison" /><div class="cap">Decision Tree performed best, but the most useful insight is which features the models relied on: engagement, timing, budget, and genre.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">10</div><div><h2>What the Results Mean in Practice</h2><div class="section-sub">The results point to a specific story about movie visibility.</div></div></div>
+      <div class="three-col">
+        <div class="pull"><strong>Visibility is dynamic</strong><br>Release year and release month mattered repeatedly, which suggests recency and timing strongly shape attention.</div>
+        <div class="pull"><strong>Scale still matters</strong><br>High-budget movies were strongly linked to high revenue and were less likely to sit in the lower-visibility group.</div>
+        <div class="pull"><strong>Approval is different from reach</strong><br>Ratings and popularity were connected, but they were not the same thing, and some models separated them differently.</div>
+      </div>
+      <div class="block" style="margin-top:16px;"><p>Together, these results suggest that movie success is a mix of visibility, timing, scale, and audience response. The project does not support one single formula for success. Instead, it shows that different kinds of success signals interact with each other.</p></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">11</div><div><h2>Non-Technical Conclusions</h2><div class="section-sub">The strongest ending is simple, clear, and practical.</div></div></div>
+      <div class="two-col">
+        <div>
+          <div class="block"><ul><li>Movie success is not one number.</li><li>Popularity and ratings tell related but different stories.</li><li>Release timing and audience engagement were some of the clearest signals behind visibility.</li><li>Financial scale mattered, but it did not automatically guarantee stronger audience approval.</li><li>The most useful findings were the ones that could explain what kind of movie tends to become visible and why.</li></ul></div>
+          <div class="quote-box"><p class="quote">The biggest lesson is that movie success has several sides, and the best analysis explains those sides instead of collapsing them into one score.</p></div>
+        </div>
+        <div class="visual"><h3>Release Timing</h3><img src="../website/assets/images/08_popularity_by_month.png" alt="Popularity by month" /><div class="cap">Release timing remained one of the clearest practical signals in the project.</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div class="num">12</div><div><h2>Closing Message</h2><div class="section-sub">A clear final statement to end the presentation.</div></div></div>
+      <div class="quote-box"><p class="quote">A movie becomes successful through more than quality alone. Attention, timing, audience behavior, genre expectations, and market context all work together.</p></div>
+      <div class="block" style="margin-top:16px;"><p>This project used multiple machine learning methods to study movie success from different angles. The most valuable result was not only a prediction score. It was the discovery that timing, engagement, budget, and genre each explained different pieces of how movies become visible and successful.</p></div>
+    </section>
+
+    <div class="footer-note">TMDB Movie Success Project</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+model,accuracy,tn,fp,fn,tp
+Bernoulli NB,0.7917,34,2,8,4
+Multinomial NB,0.7292,33,3,10,2
+Gaussian NB,0.3125,3,33,0,12

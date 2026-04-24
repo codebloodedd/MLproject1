@@ -1,10 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Clustering | TMDB Movie Success</title>
+    <title>SVM | TMDB Movie Success</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -13,23 +13,314 @@
 
     <div class="container">
         <div class="hero">
-            <span class="badge">Module 2</span>
-            <h1>Clustering</h1>
-            <div class="small">Work in progress â€” this section will be completed in later modules.</div>
+            <span class="badge">Module 4</span>
+            <span class="badge">Support Vector Machines</span>
+            <span class="badge">Linear, Poly, RBF</span>
+            <h1>Support Vector Machines (SVMs)</h1>
+            <div class="small">
+                In this section, SVM classification is used to predict whether a movie belongs to the top 25% of
+                popularity. The same cleaned TMDB dataset is tested with three kernels and several cost values so the
+                decision boundary can be compared directly.
+            </div>
         </div>
 
         <div class="card" style="margin-top:16px;">
-            <h2>Status</h2>
+            <h2>(a) Overview</h2>
+
             <p>
-                Work in progress. This tab will include an overview of clustering, the prepared dataset used, a link to
-                the code,
-                visualized cluster results, and interpretation of what the clusters represent for movie success.
+                A Support Vector Machine is a supervised classifier that tries to separate classes with the widest
+                possible margin. In the simplest case, the model looks for a straight decision boundary that keeps the
+                positive and negative classes apart while leaning most heavily on the closest points, called
+                <b>support vectors</b>. That is why SVMs are often described as <b>linear separators</b>: the core idea
+                is always a linear separating hyperplane in some feature space.
+            </p>
+
+            <p>
+                Kernels extend that idea by changing the feature space without forcing us to manually build every
+                higher-dimensional feature. The reason the <b>dot product</b> is so important is that kernels are built
+                around it. Instead of explicitly transforming every point, a kernel computes how similar two points
+                would look after the transformation by using a dot-product-based formula. This is known as the
+                <b>kernel trick</b>.
+            </p>
+
+            <p>
+                The three kernel families used here are:
+                <b>linear</b>, where the model uses the original feature space;
+                <b>polynomial</b>, where curved interactions such as squared terms and feature combinations are
+                introduced; and
+                <b>RBF</b>, where local neighborhoods matter more and the decision boundary can become much more
+                flexible. The polynomial and RBF kernels are especially useful when the classes are not separated well
+                by one straight boundary in the original data.
+            </p>
+
+            <div class="codebox" style="margin-top:12px;">Linear kernel: K(x, z) = x dot z
+Polynomial kernel: K(x, z) = (x dot z + r)^d
+RBF kernel: K(x, z) = exp(-gamma ||x - z||^2)</div>
+
+            <p>
+                Worked casting example with a polynomial kernel:
+                start with a 2D point <code>x = (x1, x2) = (2, 3)</code>, use <code>r = 1</code> and
+                <code>d = 2</code>, and the point is implicitly cast into six dimensions:
+                <code>[x1^2, sqrt(2)x1x2, x2^2, sqrt(2)x1, sqrt(2)x2, 1]</code>.
+                Substituting <code>(2, 3)</code> gives approximately
+                <code>[4, 8.49, 9, 2.83, 4.24, 1]</code>. The SVM does not need that vector written out every time,
+                because the polynomial kernel computes the effect through the dot product.
+            </p>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_margin_support_vectors.png" alt="SVM margin and support vectors">
+                    <figcaption class="figcap">
+                        <b>Margin idea.</b> SVMs choose the boundary with the strongest separation margin, while the
+                        closest points help determine where that boundary should sit.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_kernel_concept.png" alt="SVM kernel concept">
+                    <figcaption class="figcap">
+                        <b>Kernel idea.</b> Some class patterns are hard to separate with one straight boundary, so a
+                        kernel lets the SVM behave like a linear separator in a richer feature space.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_kernel_formulas.png" alt="SVM kernel formulas">
+                    <figcaption class="figcap">
+                        <b>Kernel formulas.</b> The linear, polynomial, and RBF kernels all rely on dot-product style
+                        similarity calculations.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_polynomial_cast_example.png" alt="Polynomial kernel casting example">
+                    <figcaption class="figcap">
+                        <b>2D to higher dimension example.</b> A 2D point can be implicitly expanded into multiple
+                        dimensions when the polynomial kernel is used with <code>r = 1</code> and <code>d = 2</code>.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(b) Data Prep</h2>
+
+            <p>
+                SVM classification is a supervised method, so it can only be used when the data has labels. For this
+                project, the main label is <code>label_popular_top25</code>, where 1 means the movie is in the top 25%
+                of popularity and 0 means it is not. After duplicate movie IDs were removed, the modeling dataset
+                contained <b>191 unique movies</b>.
+            </p>
+
+            <p>
+                SVMs also require <b>numeric input</b>. That matters because the model compares examples by distance,
+                geometry, and dot-product calculations. Text labels such as genres cannot be used directly, so genres
+                were converted into numeric indicator columns, and the numeric movie features were prepared into one
+                combined feature matrix with <b>27 numeric columns</b>.
+            </p>
+
+            <p>
+                The same stratified split strategy from Module 3 was reused here: <b>143 training rows</b> and
+                <b>48 testing rows</b>. The training and testing sets must stay disjoint so the model is evaluated on
+                unseen movies. The split summary reports <b>0 overlapping movie IDs</b>, which helps prevent leakage and
+                keeps the accuracy results honest.
+            </p>
+
+            <div class="stats-grid" style="margin-top:14px;">
+                <div class="stat">
+                    <div class="stat-label">Rows after deduplication</div>
+                    <div class="stat-value">191</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Training rows</div>
+                    <div class="stat-value">143</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Testing rows</div>
+                    <div class="stat-value">48</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Numeric SVM features</div>
+                    <div class="stat-value">27</div>
+                </div>
+            </div>
+
+            <ul>
+                <li><b>Prepared modeling dataset:</b> <a href="assets/data/module4/module4_modeling_dataset.csv"
+                        target="_blank">module4_modeling_dataset.csv</a></li>
+                <li><b>Numeric SVM feature sample:</b> <a href="assets/data/module4/svm_numeric_feature_sample.csv"
+                        target="_blank">svm_numeric_feature_sample.csv</a></li>
+                <li><b>Train/test split summary:</b> <a href="assets/data/module4/train_test_split_summary.json"
+                        target="_blank">train_test_split_summary.json</a></li>
+                <li><b>Training sample:</b> <a href="assets/data/module4/train_sample.csv" target="_blank">train_sample.csv</a></li>
+                <li><b>Testing sample:</b> <a href="assets/data/module4/test_sample.csv" target="_blank">test_sample.csv</a></li>
+            </ul>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/train_test_split.png" alt="Module 4 train test split">
+                    <figcaption class="figcap">
+                        <b>Disjoint split.</b> The same partition is reused across Module 4 so the comparisons stay fair.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_numeric_feature_preview.png" alt="SVM numeric feature preview">
+                    <figcaption class="figcap">
+                        <b>Numeric feature frame.</b> Genre tags are encoded into numbers so the SVM can work in vector
+                        space.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(c) Code</h2>
+
+            <p>
+                The full SVM workflow was written in Python in the Module 4 pipeline. The script builds the numeric
+                dataset, runs the kernel and cost experiments, saves the confusion matrices, and exports the
+                visualization assets used on this page.
+            </p>
+
+            <ul>
+                <li><b>Module 4 code:</b> <a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module4/08_svm_ensemble_tmdb.py"
+                        target="_blank" rel="noreferrer">08_svm_ensemble_tmdb.py</a></li>
+                <li><b>SVM experiment table:</b> <a href="assets/data/module4/svm_experiment_results.csv"
+                        target="_blank">svm_experiment_results.csv</a></li>
+                <li><b>Best-kernel summary:</b> <a href="assets/data/module4/svm_best_kernels.csv"
+                        target="_blank">svm_best_kernels.csv</a></li>
+            </ul>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(d) Results</h2>
+
+            <p>
+                I tested three kernels, each across multiple cost values, and then kept the best cost for each kernel.
+                The best overall SVM was the <b>RBF kernel with C = 1</b>, which reached <b>0.7500 accuracy</b>.
+                Both the <b>linear kernel with C = 0.1</b> and the <b>polynomial kernel with C = 1</b> finished at
+                <b>0.7083 accuracy</b>.
+            </p>
+
+            <p>
+                That result suggests the movie-success boundary is not perfectly straight in the original feature space.
+                The RBF kernel handled the separation better because it can respond to local nonlinear structure, while
+                the linear and polynomial settings left more overlap between top-popularity movies and the rest of the
+                sample.
+            </p>
+
+            <div class="table-wrap" style="margin-top:12px;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Kernel</th>
+                            <th>Chosen C</th>
+                            <th>Accuracy</th>
+                            <th>Confusion matrix values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Linear</td>
+                            <td>0.1</td>
+                            <td>0.7083</td>
+                            <td>TN=24, FP=12, FN=2, TP=10</td>
+                        </tr>
+                        <tr>
+                            <td>Polynomial</td>
+                            <td>1</td>
+                            <td>0.7083</td>
+                            <td>TN=26, FP=10, FN=4, TP=8</td>
+                        </tr>
+                        <tr>
+                            <td>RBF</td>
+                            <td>1</td>
+                            <td>0.7500</td>
+                            <td>TN=27, FP=9, FN=3, TP=9</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_kernel_cost_comparison.png" alt="SVM kernel and cost comparison">
+                    <figcaption class="figcap">
+                        <b>Kernel and cost experiments.</b> The RBF setting at <code>C = 1</code> produced the best
+                        held-out accuracy.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_confusion_rbf.png" alt="RBF confusion matrix">
+                    <figcaption class="figcap">
+                        <b>Best confusion matrix.</b> The RBF kernel gave the strongest overall balance between false
+                        positives and true positives for the popularity label.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div class="triple-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_boundary_linear.png" alt="Linear SVM boundary">
+                    <figcaption class="figcap">
+                        <b>Linear kernel.</b> The boundary is simple and interpretable, but the classes still overlap.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_boundary_poly.png" alt="Polynomial SVM boundary">
+                    <figcaption class="figcap">
+                        <b>Polynomial kernel.</b> Curvature helps somewhat, but the separation remains limited here.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_boundary_rbf.png" alt="RBF SVM boundary">
+                    <figcaption class="figcap">
+                        <b>RBF kernel.</b> The more flexible boundary does the best job following the movie clusters in
+                        2D PCA view.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_confusion_linear.png" alt="Linear confusion matrix">
+                    <figcaption class="figcap">
+                        <b>Linear confusion matrix.</b> Stronger recall on positives, but more false positives than the
+                        best RBF model.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/svm_confusion_poly.png" alt="Polynomial confusion matrix">
+                    <figcaption class="figcap">
+                        <b>Polynomial confusion matrix.</b> Slightly more conservative than linear, but it still trails
+                        the best RBF score.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(e) Conclusions</h2>
+
+            <p>
+                The SVM results suggest that movie visibility in this dataset is not separated best by one simple
+                straight rule. The RBF kernel performed best, which points to a more curved or locally structured
+                boundary between top-popularity movies and the rest. In topic terms, that means movie visibility seems
+                to depend on a mix of timing, scale, and genre signals that interact in ways a purely linear separator
+                does not fully capture.
             </p>
         </div>
     </div>
 
     <div id="footer-slot"></div>
-    <script src="app.js?v=20260402b"></script>
+    <script src="app.js?v=20260423a"></script>
 </body>
 
 </html>

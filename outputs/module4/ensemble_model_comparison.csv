@@ -1,0 +1,4 @@
+model,accuracy
+Decision Tree (Module 3 best),0.7917
+Random Forest,0.75
+"SVM (rbf, C=1)",0.75

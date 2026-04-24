@@ -1,0 +1,90 @@
+{
+  "split": {
+    "rows_before_dedup": 218,
+    "rows_after_dedup": 191,
+    "duplicates_removed": 27,
+    "train_rows": 143,
+    "test_rows": 48,
+    "train_ids_overlap_test_ids": 0,
+    "target_name": "label_popular_top25",
+    "target_rate": 0.2408
+  },
+  "naive_bayes": [
+    {
+      "model": "Bernoulli NB",
+      "accuracy": 0.7917,
+      "tn": 34,
+      "fp": 2,
+      "fn": 8,
+      "tp": 4
+    },
+    {
+      "model": "Multinomial NB",
+      "accuracy": 0.7292,
+      "tn": 33,
+      "fp": 3,
+      "fn": 10,
+      "tp": 2
+    },
+    {
+      "model": "Gaussian NB",
+      "accuracy": 0.3125,
+      "tn": 3,
+      "fp": 33,
+      "fn": 0,
+      "tp": 12
+    }
+  ],
+  "decision_trees": [
+    {
+      "tree": "Tree A",
+      "criterion": "gini",
+      "max_depth": 4,
+      "min_samples_leaf": 5,
+      "root_feature": "release_year",
+      "accuracy": 0.7292,
+      "tn": 32,
+      "fp": 4,
+      "fn": 9,
+      "tp": 3
+    },
+    {
+      "tree": "Tree B",
+      "criterion": "entropy",
+      "max_depth": 4,
+      "min_samples_leaf": 5,
+      "root_feature": "release_month",
+      "accuracy": 0.7708,
+      "tn": 35,
+      "fp": 1,
+      "fn": 10,
+      "tp": 2
+    },
+    {
+      "tree": "Tree C",
+      "criterion": "gini",
+      "max_depth": 5,
+      "min_samples_leaf": 8,
+      "root_feature": "vote_count",
+      "accuracy": 0.7917,
+      "tn": 34,
+      "fp": 2,
+      "fn": 8,
+      "tp": 4
+    }
+  ],
+  "regression_compare": [
+    {
+      "model": "Decision Tree",
+      "accuracy": 0.7917
+    },
+    {
+      "model": "Logistic Regression",
+      "accuracy": 0.7292
+    },
+    {
+      "model": "Multinomial NB",
+      "accuracy": 0.7292
+    }
+  ]
+}

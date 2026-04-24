@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ensemble Learning | TMDB Movie Success</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id="nav-slot"></div>
+
+    <div class="container">
+        <div class="hero">
+            <span class="badge">Module 4</span>
+            <span class="badge">Ensemble Learning</span>
+            <span class="badge">Random Forest</span>
+            <h1>Ensemble Learning</h1>
+            <div class="small">
+                This section uses Random Forest as the ensemble method for the same movie-success problem: predicting
+                whether a movie belongs to the top 25% of popularity. The goal is to see what improves when many trees
+                vote together instead of relying on one model alone.
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(a) Overview</h2>
+
+            <p>
+                Ensemble learning combines multiple models so the final prediction is usually more stable than relying
+                on one model by itself. Instead of trusting a single set of splits or one decision boundary, an
+                ensemble lets several learners contribute to the final answer. This often helps reduce overfitting and
+                smooth out the mistakes any one model would make on its own.
+            </p>
+
+            <p>
+                For this project, I chose <b>Random Forest</b>. A random forest is an ensemble of many decision trees.
+                Each tree sees a slightly different bootstrap sample of the training data and a slightly different set
+                of split opportunities. The final prediction comes from the trees voting together. That makes Random
+                Forest a strong fit for this project because the earlier decision tree results already suggested that
+                rule-based movie splits were useful.
+            </p>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/ensemble_random_forest_overview.png" alt="Random forest overview">
+                    <figcaption class="figcap">
+                        <b>Why ensembles help.</b> Many trees can produce a more reliable answer than one tree when the
+                        data has several competing signals.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/ensemble_feature_importance.png" alt="Random forest feature importance">
+                    <figcaption class="figcap">
+                        <b>What the forest used most.</b> Feature importance gives a practical view of which movie
+                        signals mattered most to the ensemble.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(b) Data Prep</h2>
+
+            <p>
+                To keep the Module 4 comparison fair, the ensemble model uses the exact same deduplicated dataset,
+                labels, and train/test split as the SVM section. That means the comparison focuses on model behavior
+                rather than changing the data underneath the models.
+            </p>
+
+            <p>
+                The main target is still <code>label_popular_top25</code>, and the feature set remains the same numeric
+                movie matrix with encoded genres. Because the training set and testing set are disjoint, the forest is
+                judged on movies it did not see while growing its trees.
+            </p>
+
+            <ul>
+                <li><b>Prepared modeling dataset:</b> <a href="assets/data/module4/module4_modeling_dataset.csv"
+                        target="_blank">module4_modeling_dataset.csv</a></li>
+                <li><b>Train/test split summary:</b> <a href="assets/data/module4/train_test_split_summary.json"
+                        target="_blank">train_test_split_summary.json</a></li>
+                <li><b>Training sample:</b> <a href="assets/data/module4/train_sample.csv" target="_blank">train_sample.csv</a></li>
+                <li><b>Testing sample:</b> <a href="assets/data/module4/test_sample.csv" target="_blank">test_sample.csv</a></li>
+            </ul>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/train_preview.png" alt="Training set preview for ensemble">
+                    <figcaption class="figcap">
+                        <b>Training sample.</b> The forest learns from this side of the split only.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/test_preview.png" alt="Testing set preview for ensemble">
+                    <figcaption class="figcap">
+                        <b>Testing sample.</b> These held-out movies make the evaluation more trustworthy.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(c) Code</h2>
+
+            <p>
+                The Random Forest workflow was written in the same Module 4 Python pipeline that generated the SVM
+                assets, which keeps the comparison reproducible and consistent.
+            </p>
+
+            <ul>
+                <li><b>Module 4 code:</b> <a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module4/08_svm_ensemble_tmdb.py"
+                        target="_blank" rel="noreferrer">08_svm_ensemble_tmdb.py</a></li>
+                <li><b>Random Forest metrics:</b> <a href="assets/data/module4/ensemble_random_forest_metrics.csv"
+                        target="_blank">ensemble_random_forest_metrics.csv</a></li>
+                <li><b>Feature importance table:</b> <a href="assets/data/module4/ensemble_feature_importances.csv"
+                        target="_blank">ensemble_feature_importances.csv</a></li>
+                <li><b>Model comparison table:</b> <a href="assets/data/module4/ensemble_model_comparison.csv"
+                        target="_blank">ensemble_model_comparison.csv</a></li>
+                <li><b>Secondary target comparison:</b> <a href="assets/data/module4/secondary_target_comparison.csv"
+                        target="_blank">secondary_target_comparison.csv</a></li>
+            </ul>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(d) Results</h2>
+
+            <p>
+                On the main popularity target, the Random Forest reached <b>0.7500 accuracy</b>. That tied the best SVM
+                result and came in just below the best single decision tree from Module 3, which reached
+                <b>0.7917 accuracy</b>. In other words, the ensemble was competitive, but it did not clearly beat the
+                strongest earlier tree on this particular target.
+            </p>
+
+            <p>
+                The confusion matrix shows that the forest handled the negative class well and still captured part of
+                the positive class, but it missed some of the top-popularity movies. That means the forest learned a
+                useful movie-success pattern, yet the boundary between highly visible movies and the rest of the sample
+                remains difficult because several movie profiles still overlap.
+            </p>
+
+            <p>
+                One especially useful result came from the secondary comparison. When the target changed from
+                top-popularity to <code>label_high_rating</code>, the Random Forest jumped to <b>0.9792 accuracy</b>.
+                That suggests audience approval is easier for this ensemble to recognize than broad visibility. In
+                practical terms, the movie traits behind being well liked look more stable to the forest than the traits
+                behind becoming highly visible.
+            </p>
+
+            <div class="stats-grid" style="margin-top:14px;">
+                <div class="stat">
+                    <div class="stat-label">Random Forest accuracy</div>
+                    <div class="stat-value">0.7500</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Best SVM accuracy</div>
+                    <div class="stat-value">0.7500</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Best Decision Tree</div>
+                    <div class="stat-value">0.7917</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">High-rating RF accuracy</div>
+                    <div class="stat-value">0.9792</div>
+                </div>
+            </div>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/ensemble_confusion_random_forest.png" alt="Random forest confusion matrix">
+                    <figcaption class="figcap">
+                        <b>Random Forest confusion matrix.</b> The forest was solid overall, but it still missed some
+                        movies in the top-popularity group.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/ensemble_model_comparison.png" alt="Model comparison for ensemble">
+                    <figcaption class="figcap">
+                        <b>Model comparison.</b> Random Forest tied the best SVM and stayed close to the best single
+                        decision tree.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div class="dual-grid" style="margin-top:12px;">
+                <figure class="figure">
+                    <img src="assets/images/module4/ensemble_feature_importance.png" alt="Feature importance for random forest">
+                    <figcaption class="figcap">
+                        <b>What the ensemble captured.</b> Release timing, vote activity, financial scale, and selected
+                        genres were among the strongest signals inside the forest.
+                    </figcaption>
+                </figure>
+
+                <figure class="figure">
+                    <img src="assets/images/module4/secondary_target_contrast.png" alt="Secondary target contrast">
+                    <figcaption class="figcap">
+                        <b>Popularity versus rating.</b> The forest performed much better on the high-rating label than
+                        on the top-popularity label, reinforcing that visibility and approval are not the same outcome.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px;">
+            <h2>(e) Conclusions</h2>
+
+            <p>
+                The ensemble results imply that movie success contains more than one kind of predictability. For
+                top-popularity, the Random Forest was competitive but not dominant, which suggests visibility depends on
+                a messy mix of signals and outside attention effects. For high ratings, however, the ensemble was
+                extremely strong, which suggests audience approval follows a cleaner pattern in the movie attributes
+                available in this dataset. That difference is one of the most important takeaways in the entire project.
+            </p>
+        </div>
+    </div>
+
+    <div id="footer-slot"></div>
+    <script src="app.js?v=20260423a"></script>
+</body>
+
+</html>

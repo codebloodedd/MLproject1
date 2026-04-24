@@ -1,0 +1,71 @@
+{
+  "split": {
+    "rows_before_dedup": 218,
+    "rows_after_dedup": 191,
+    "duplicates_removed": 27,
+    "train_rows": 143,
+    "test_rows": 48,
+    "train_ids_overlap_test_ids": 0,
+    "primary_target": "label_popular_top25",
+    "secondary_target": "label_high_rating",
+    "primary_positive_rate": 0.2408,
+    "secondary_positive_rate": 0.4555,
+    "numeric_feature_count": 27,
+    "numeric_only_requirement": "SVM classification needs numeric feature vectors because the algorithm depends on distance and dot-product calculations in vector space."
+  },
+  "svm_best_kernels": [
+    {
+      "target": "label_popular_top25",
+      "kernel": "rbf",
+      "C": 1.0,
+      "accuracy": 0.75,
+      "tn": 27,
+      "fp": 9,
+      "fn": 3,
+      "tp": 9
+    },
+    {
+      "target": "label_popular_top25",
+      "kernel": "linear",
+      "C": 0.1,
+      "accuracy": 0.7083,
+      "tn": 24,
+      "fp": 12,
+      "fn": 2,
+      "tp": 10
+    },
+    {
+      "target": "label_popular_top25",
+      "kernel": "poly",
+      "C": 1.0,
+      "accuracy": 0.7083,
+      "tn": 26,
+      "fp": 10,
+      "fn": 4,
+      "tp": 8
+    }
+  ],
+  "best_svm_kernel": "rbf",
+  "best_svm_accuracy": 0.75,
+  "best_svm_cost": 1.0,
+  "random_forest_accuracy": 0.75,
+  "ensemble_comparison": [
+    {
+      "model": "Decision Tree (Module 3 best)",
+      "accuracy": 0.7917
+    },
+    {
+      "model": "Random Forest",
+      "accuracy": 0.75
+    },
+    {
+      "model": "SVM (rbf, C=1)",
+      "accuracy": 0.75
+    }
+  ],
+  "secondary_target": {
+    "svm_high_rating_accuracy": 0.75,
+    "rf_high_rating_accuracy": 0.9792
+  },
+  "genre_indicator_count": 20
+}

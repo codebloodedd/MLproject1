@@ -1,0 +1,4 @@
+tree,criterion,max_depth,min_samples_leaf,root_feature,accuracy,tn,fp,fn,tp
+Tree A,gini,4,5,release_year,0.7292,32,4,9,3
+Tree B,entropy,4,5,release_month,0.7708,35,1,10,2
+Tree C,gini,5,8,vote_count,0.7917,34,2,8,4

@@ -9,8 +9,9 @@
       <a data-page="arm.html" href="arm.html">ARM</a>
       <a data-page="dt.html" href="dt.html">DT</a>
       <a data-page="nb.html" href="nb.html">NB</a>
-      <a data-page="svm.html" href="svm.html">SVM</a>
       <a data-page="regression.html" href="regression.html">Regression</a>
+      <a data-page="svm.html" href="svm.html">SVM</a>
+      <a data-page="ensemble.html" href="ensemble.html">Ensemble</a>
       <a data-page="conclusions.html" href="conclusions.html">Conclusions</a>
       <a data-page="about.html" href="about.html">About Me</a>
     </div>
@@ -23,7 +24,7 @@ const FOOTER_HTML = `
   <div class="footer-inner">
     <div>
       <div class="footer-title">Pratham Tushar Shah</div>
-      <div class="footer-sub">Machine Learning Project - Modules 1 to 3</div>
+      <div class="footer-sub">Machine Learning Project - Final Website Submission (Modules 1 to 4)</div>
     </div>
     <div class="footer-links">
       <a href="https://willowy-tiramisu-66795c.netlify.app/" target="_blank" rel="noreferrer">Portfolio</a>

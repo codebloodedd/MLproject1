@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -9,71 +9,72 @@
 </head>
 
 <body>
-
     <div id="nav-slot"></div>
 
     <div class="container">
-
         <div class="hero">
-            <span class="badge">Modules 1-3</span>
+            <span class="badge">Final Project</span>
             <span class="badge">TMDB Movies</span>
             <span class="badge">Movie Success Theme</span>
             <h1>What makes a movie successful?</h1>
-
             <div class="small">
-                This website follows the same movie-success topic across each module, moving from data collection and
-                exploration into deeper pattern finding and supervised prediction.
+                This website brings together the full project story, from basic movie patterns to final prediction
+                results, using TMDB movie data as the running topic across Modules 1 through 4.
             </div>
         </div>
 
         <div class="grid" style="margin-top:16px;">
-
             <div class="card">
-
                 <h2>Topic Background</h2>
 
                 <p>
-                    Movies are more than entertainment. They are cultural events shaped by storytelling, star power,
-                    marketing, release timing, and audience attention. A movie can feel successful because people talk
-                    about it everywhere, because viewers rate it highly, or because it remains visible long after its
-                    release.
+                    Movies matter because they do more than fill time. They create shared moments, shape conversations,
+                    influence culture, and leave lasting impressions on audiences. When a movie becomes highly visible,
+                    widely discussed, or deeply appreciated, it starts to stand out as a success in the public eye.
                 </p>
 
                 <p>
-                    This project focuses on how movie characteristics connect to different kinds of success. Genre,
-                    release season, runtime, and financial scale can all affect the way a movie reaches audiences and
-                    how strongly those audiences respond. Looking at these patterns helps explain why some titles become
-                    highly visible while others earn quieter but stronger approval.
+                    The challenge is that movie success does not mean just one thing. A movie can attract massive
+                    attention because of its release moment, franchise strength, or marketing reach, while another movie
+                    may earn quieter but stronger audience approval. Both of those outcomes feel successful, but they
+                    reflect different kinds of impact.
                 </p>
 
                 <p>
-                    The topic also matters because movie success is not one simple idea. A film can be widely seen but
-                    only moderately liked, or it can be deeply appreciated without becoming a major mainstream hit.
-                    Exploring both attention and reception gives a fuller picture of what success looks like in the
-                    movie industry.
+                    This project focuses on that difference by looking at patterns connected to visibility, audience
+                    response, release timing, genre, and financial scale. The goal is not simply to point at the most
+                    popular titles, but to understand the kinds of movie profiles that repeatedly show up near the top
+                    and the kinds that stay more limited in reach.
                 </p>
 
                 <p>
-                    By studying these trends, this project aims to connect everyday movie questions to real data. The
-                    goal is to better understand what kinds of movies attract attention, what kinds tend to earn strong
-                    audience reactions, and how those patterns can support smarter decisions about content, release
-                    strategy, and audience expectations.
+                    That question matters to more than just movie fans. Studios, marketers, streaming platforms, and
+                    even audiences themselves benefit from understanding what tends to bring attention to a movie and
+                    what tends to support stronger approval. Looking at these patterns can help explain why some movies
+                    break through quickly while others connect in a different, less visible way.
+                </p>
+
+                <p>
+                    Across the website, the project moves from describing the movie landscape, to finding recurring
+                    patterns, to testing whether those patterns are strong enough to support prediction. By the end, the
+                    biggest takeaway is not that there is one perfect recipe for success, but that movie success leaves
+                    recognizable signals that can be explored, compared, and interpreted in a meaningful way.
                 </p>
 
                 <div class="dual-grid" style="margin-top:16px;">
                     <figure class="figure">
                         <img src="assets/images/08_popularity_by_month.png" alt="Popularity by release month">
                         <figcaption class="figcap">
-                            <b>Release timing matters.</b> Audience attention is not evenly distributed across the
-                            calendar, which makes release season an important part of the topic.
+                            <b>Release timing shapes attention.</b> Audience visibility is not spread evenly across the
+                            calendar, so when a movie arrives can matter almost as much as what it is.
                         </figcaption>
                     </figure>
 
                     <figure class="figure">
-                        <img src="assets/images/10_top_genres.png" alt="Top movie genres">
+                        <img src="assets/images/04_popularity_vs_rating.png" alt="Popularity versus rating">
                         <figcaption class="figcap">
-                            <b>Movie types matter too.</b> Genre mix helps set audience expectations and can influence
-                            which movies become widely discussed.
+                            <b>Attention and approval are different.</b> A movie can be widely noticed without being
+                            one of the best liked, which is why this project treats success as more than one idea.
                         </figcaption>
                     </figure>
                 </div>
@@ -89,19 +90,17 @@
                     <li>How do vote counts relate to rating stability?</li>
                     <li>Do higher-budget films show stronger popularity or revenue signals?</li>
                     <li>Are revenue values highly skewed?</li>
-                    <li>Can the top-25% popularity label be predicted later using supervised models?</li>
-                    <li>Do certain genre combinations appear consistently with higher success?</li>
+                    <li>Can the top-25% popularity label be predicted using several supervised models?</li>
+                    <li>Do certain genre combinations appear consistently with higher or lower visibility?</li>
                 </ol>
-
             </div>
 
             <div class="card">
-
                 <h2>Project Repository</h2>
 
                 <p>
-                    All datasets, scripts, and outputs used in this project are stored in the project GitHub
-                    repository.
+                    All datasets, scripts, outputs, and website files for this final submission are stored in the same
+                    GitHub project repository.
                 </p>
 
                 <ul>
@@ -111,7 +110,6 @@
                             https://github.com/codebloodedd/MLproject1
                         </a>
                     </li>
-
                     <li>
                         <b>Core scripts:</b>
                         <ul>
@@ -121,17 +119,18 @@
                                     target="_blank" rel="noreferrer">02_clean_tmdb.py</a></li>
                             <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/03_eda_tmdb.py"
                                     target="_blank" rel="noreferrer">03_eda_tmdb.py</a></li>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module2/06_arm_tmdb.py"
+                                    target="_blank" rel="noreferrer">06_arm_tmdb.py</a></li>
                             <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module3/07_supervised_tmdb.py"
                                     target="_blank" rel="noreferrer">07_supervised_tmdb.py</a></li>
+                            <li><a href="https://github.com/codebloodedd/MLproject1/blob/main/code/module4/08_svm_ensemble_tmdb.py"
+                                    target="_blank" rel="noreferrer">08_svm_ensemble_tmdb.py</a></li>
                         </ul>
                     </li>
-
                     <li>
                         <b>Clean dataset used throughout the project:</b><br>
                         <a href="https://github.com/codebloodedd/MLproject1/blob/main/data_clean/tmdb_clean.csv"
-                            target="_blank" rel="noreferrer">
-                            tmdb_clean.csv
-                        </a>
+                            target="_blank" rel="noreferrer">tmdb_clean.csv</a>
                     </li>
                 </ul>
 
@@ -141,22 +140,19 @@
                     <li>Module 1: API collection, cleaning, and exploratory analysis</li>
                     <li>Module 2: PCA, clustering, and association rule mining</li>
                     <li>Module 3: Naive Bayes, decision trees, and regression-based classification</li>
+                    <li>Module 4: SVMs, ensemble learning, and final project conclusions</li>
                 </ul>
 
                 <div class="callout">
-                    <b>Current focus:</b> Module 3 uses labeled movie data to predict whether a movie falls into the
-                    top 25% of popularity.
+                    <b>Final project focus:</b> the website now shows the complete story, ending with SVM and ensemble
+                    models that test whether a movie is likely to belong to the top 25% of popularity.
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     <div id="footer-slot"></div>
-    <script src="app.js?v=20260402b"></script>
-
+    <script src="app.js?v=20260423a"></script>
 </body>
 
 </html>

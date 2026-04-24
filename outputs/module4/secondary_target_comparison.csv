@@ -1,0 +1,5 @@
+target,model,accuracy
+label_popular_top25,SVM (rbf),0.75
+label_popular_top25,Random Forest,0.75
+label_high_rating,SVM (rbf),0.75
+label_high_rating,Random Forest,0.9792

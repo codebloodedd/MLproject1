@@ -1,0 +1,14 @@
+{
+  "rows_before_dedup": 218,
+  "rows_after_dedup": 191,
+  "duplicates_removed": 27,
+  "train_rows": 143,
+  "test_rows": 48,
+  "train_ids_overlap_test_ids": 0,
+  "primary_target": "label_popular_top25",
+  "secondary_target": "label_high_rating",
+  "primary_positive_rate": 0.2408,
+  "secondary_positive_rate": 0.4555,
+  "numeric_feature_count": 27,
+  "numeric_only_requirement": "SVM classification needs numeric feature vectors because the algorithm depends on distance and dot-product calculations in vector space."
+}
